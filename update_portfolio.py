@@ -1,7 +1,7 @@
 import re
 
 def process():
-    with open('portfolio.html', 'r', encoding='utf-8') as f:
+    with open('index.html', 'r', encoding='utf-8') as f:
         content = f.read()
 
     # 1. Update Trusted Logos
@@ -205,7 +205,7 @@ def process():
   'p6.chip':'অ্যাকাডেমিক','p6.t':'সপ্তম শ্রেণীর গণিত প্রশ্নপত্র',"""
     content = content.replace(bn_old, bn_new)
 
-    with open('portfolio.html', 'w', encoding='utf-8') as f:
+    with open('index.html', 'w', encoding='utf-8') as f:
         f.write(content)
 
 process()
