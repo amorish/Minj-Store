@@ -649,9 +649,51 @@ footer a .lucide{width:14px;height:14px}
   border-radius: 8px;
   cursor: pointer;
 }
+
+/* ─── CUSTOM CURSOR ─────────────────────────────────────── */
+@media (pointer: fine) {
+  body, a, button, input, textarea, .lang-opt, .wa-btn, .hero-cat {
+    cursor: none !important;
+  }
+  .cursor-dot {
+    position: fixed;
+    top: 0; left: 0;
+    width: 8px; height: 8px;
+    background-color: var(--accent);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9999;
+  }
+  .cursor-outline {
+    position: fixed;
+    top: 0; left: 0;
+    width: 40px; height: 40px;
+    border: 1px solid rgba(255, 92, 0, 0.5);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 9998;
+    transition: width 0.2s, height 0.2s, background-color 0.2s;
+  }
+  body.cursor-hover .cursor-outline {
+    width: 60px; height: 60px;
+    background-color: rgba(255, 92, 0, 0.1);
+    border-color: rgba(255, 92, 0, 0.8);
+  }
+}
+@media (pointer: coarse) {
+  .cursor-dot, .cursor-outline { display: none !important; }
+}
+
 </style>
 </head>
 <body class="lang-en">
+
+<!-- CUSTOM CURSOR -->
+<div class="cursor-dot" id="cursor-dot"></div>
+<div class="cursor-outline" id="cursor-outline"></div>
+
 
 <!-- SVG SYMBOLS -->
 <svg style="display:none" xmlns="http://www.w3.org/2000/svg">
@@ -1337,6 +1379,39 @@ document.querySelectorAll('.stat-num').forEach(el => {
 
 gsap.to('#wa-float', { scale:1.08, repeat:-1, yoyo:true, duration:1.5, ease:'sine.inOut', delay:3 });
 ScrollTrigger.create({ start:'top -60px', onToggle: self => document.querySelector('nav').classList.toggle('scrolled', self.isActive) });
+
+/* ═══ CUSTOM CURSOR ═══ */
+if (window.matchMedia("(pointer: fine)").matches) {
+  const dot = document.getElementById('cursor-dot');
+  const outline = document.getElementById('cursor-outline');
+  
+  let mouseX = window.innerWidth / 2;
+  let mouseY = window.innerHeight / 2;
+  let outlineX = mouseX;
+  let outlineY = mouseY;
+  
+  window.addEventListener('mousemove', (e) => {
+    mouseX = e.clientX;
+    mouseY = e.clientY;
+    dot.style.transform = `translate(${mouseX}px, ${mouseY}px) translate(-50%, -50%)`;
+  });
+  
+  function animateOutline() {
+    let distX = mouseX - outlineX;
+    let distY = mouseY - outlineY;
+    outlineX += distX * 0.15;
+    outlineY += distY * 0.15;
+    outline.style.transform = `translate(${outlineX}px, ${outlineY}px) translate(-50%, -50%)`;
+    requestAnimationFrame(animateOutline);
+  }
+  animateOutline();
+  
+  document.querySelectorAll('a, button, input, textarea, .lang-opt, .hero-cat').forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+}
+
 </script>
 </body>
 </html>
