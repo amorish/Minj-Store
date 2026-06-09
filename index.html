@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="refresh" content="0; url=/portfolio.html">
+  <title>Morish — Redirecting...</title>
+  <style>
+    body {
+      background-color: #080808;
+      color: #F2EFE9;
+      font-family: system-ui, -apple-system, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .loader {
+      border: 3px solid #1a1a1a;
+      border-top: 3px solid #F5A623;
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      animation: spin 1s linear infinite;
+      margin-bottom: 1rem;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    a {
+      color: #F5A623;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+  <script>
+    window.location.replace("/portfolio.html");
+  </script>
+</head>
+<body>
+  <div class="loader"></div>
+  <p>Redirecting to <a href="/portfolio.html">portfolio</a>...</p>
+</body>
+</html>
