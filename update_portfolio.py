@@ -13,8 +13,9 @@ def process():
     </div>'''
     trusted_logos_new = '''    <div class="trusted-logos">
       <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/vasundhara%20logo.svg" alt="Vasundhara" style="height:24px;"><span>Vasundhara</span></div>
-      <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/pragati%20logo.png" alt="Pragati" style="height:24px;"><span>Pragati</span></div>
-      <div class="trusted-logo"><i data-lucide="graduation-cap"></i><span>St George High School</span></div>
+      <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/pragati%20logo.webp" alt="Pragati" style="height:40px;"><span>Pragati</span></div>
+      <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/st%20george%20logo.webp" alt="St George High School" style="height:40px;"><span>St George High School</span></div>
+      <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/shivaji%20sangha%20logo.webp" alt="Shivaji Sangha" style="height:40px;"><span>Shivaji Sangha</span></div>
     </div>'''
     content = content.replace(trusted_logos_old, trusted_logos_new)
 
