@@ -1066,8 +1066,14 @@ footer a .lucide{width:14px;height:14px}
         </div>
       </div>
 
+      <!-- See All Button -->
+      <div class="port-card stg" id="see-all-btn" onclick="togglePortfolio()" style="display:flex; flex-direction:column; justify-content:center; align-items:center; cursor:pointer; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:24px; min-height: 250px; transition: all 0.3s;">
+        <i data-lucide="grid-3x3" style="width: 40px; height: 40px; color: var(--accent); margin-bottom: 1rem;"></i>
+        <span style="font-size: 1.1rem; font-weight: 600; color: #fff;">See All</span>
+      </div>
+
       <!-- 6. Mahi Furniture Quotation -->
-      <a href="past%20work/MAHI%20FURNITURE.png" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
+      <a href="past%20work/MAHI%20FURNITURE.png" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
         <div class="port-thumb">
           <img src="past%20work/MAHI%20FURNITURE.png" alt="Quotation" loading="lazy" style="object-fit: cover; object-position: center top;">
           <span class="port-chip">Quotation</span>
@@ -1079,7 +1085,7 @@ footer a .lucide{width:14px;height:14px}
       </a>
 
       <!-- 7. Shok Bhoj Nimantran Card -->
-      <a href="past%20work/shok%20bhoj%20nimantran%20card.png" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
+      <a href="past%20work/shok%20bhoj%20nimantran%20card.png" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
         <div class="port-thumb">
           <img src="past%20work/shok%20bhoj%20nimantran%20card.png" alt="Invitation Card" loading="lazy" style="object-fit: cover; object-position: center top;">
           <span class="port-chip">Invitation Card</span>
@@ -1091,7 +1097,7 @@ footer a .lucide{width:14px;height:14px}
       </a>
 
       <!-- 8. Identity Card -->
-      <a href="past%20work/IDENTITY%20CARD.pdf" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
+      <a href="past%20work/IDENTITY%20CARD.pdf" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
         <div class="port-thumb">
           <img src="past%20work/IDENTITY%20CARD.png" alt="Identity Card" loading="lazy" style="object-fit: cover; object-position: center top;">
           <span class="port-chip">ID Card</span>
@@ -1103,7 +1109,7 @@ footer a .lucide{width:14px;height:14px}
       </a>
 
       <!-- 9. Pragati Printed Banner -->
-      <a href="past%20work/2025%20Pragati/printed%20BANNER%20(1)-1.png" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
+      <a href="past%20work/2025%20Pragati/printed%20BANNER%20(1)-1.png" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
         <div class="port-thumb">
           <img src="past%20work/2025%20Pragati/printed%20BANNER%20(1)-1.png" alt="Printed Banner" loading="lazy" style="object-fit: cover; object-position: center top;">
           <span class="port-chip">Banner</span>
@@ -1115,7 +1121,7 @@ footer a .lucide{width:14px;height:14px}
       </a>
 
       <!-- 10. Illustration Replica Fox -->
-      <a href="past%20work/2025%20side%20project/illustration%20replica/sleepy%20fox%20v1.webp" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
+      <a href="past%20work/2025%20side%20project/illustration%20replica/sleepy%20fox%20v1.webp" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
         <div class="port-thumb">
           <img src="past%20work/2025%20side%20project/illustration%20replica/sleepy%20fox%20v1.webp" alt="Sleepy Fox" loading="lazy" style="object-fit: cover; object-position: center;">
           <span class="port-chip">Illustration</span>
@@ -1127,7 +1133,7 @@ footer a .lucide{width:14px;height:14px}
       </a>
 
       <!-- 11. Illustration Replica Monkey -->
-      <a href="past%20work/2025%20side%20project/illustration%20replica/monkey%20prac%201-01.webp" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
+      <a href="past%20work/2025%20side%20project/illustration%20replica/monkey%20prac%201-01.webp" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
         <div class="port-thumb">
           <img src="past%20work/2025%20side%20project/illustration%20replica/monkey%20prac%201-01.webp" alt="Monkey Practice" loading="lazy" style="object-fit: cover; object-position: center;">
           <span class="port-chip">Illustration</span>
@@ -1458,6 +1464,32 @@ if (wordLocal) {
       wordLocal.style.color = '';
     }
   });
+}
+
+function togglePortfolio() {
+  const hiddenItems = document.querySelectorAll('.port-hidden-item');
+  const btn = document.getElementById('see-all-btn');
+  const isExpanded = btn.classList.contains('expanded');
+  const grid = document.getElementById('port-grid');
+  
+  if (isExpanded) {
+    hiddenItems.forEach(item => item.style.display = 'none');
+    btn.classList.remove('expanded');
+    btn.innerHTML = '<i data-lucide="grid-3x3" style="width: 40px; height: 40px; color: var(--accent); margin-bottom: 1rem;"></i><span style="font-size: 1.1rem; font-weight: 600; color: #fff;">See All</span>';
+    lucide.createIcons();
+    grid.insertBefore(btn, hiddenItems[0]); 
+    document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    hiddenItems.forEach(item => {
+      item.style.display = 'block';
+      gsap.fromTo(item, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" });
+    });
+    btn.classList.add('expanded');
+    btn.innerHTML = '<i data-lucide="minimize-2" style="width: 40px; height: 40px; color: var(--accent); margin-bottom: 1rem;"></i><span style="font-size: 1.1rem; font-weight: 600; color: #fff;">See Less</span>';
+    lucide.createIcons();
+    grid.appendChild(btn);
+  }
+  if (window.ScrollTrigger) ScrollTrigger.refresh();
 }
 
 </script>
