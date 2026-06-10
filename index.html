@@ -1410,12 +1410,15 @@ gsap.from('#proc-list .stg', { scrollTrigger:{ trigger:'#proc-list', start:'top 
 gsap.from('#img-strip .img-strip-card', { scrollTrigger:{ trigger:'#img-strip', start:'top 80%' }, opacity:0, y:50, duration:.8, stagger:.15, ease:'power3.out' });
 
 document.querySelectorAll('.stat-num').forEach(el => {
-  let targetText = el.innerText;
+  let targetText = el.textContent || '';
   let hasPercent = targetText.includes('%');
   let targetNum = parseInt(targetText.replace(/\D/g, '')) || 0;
+  let counter = { val: 1 };
   
   const playAnimation = (isHover) => {
-    let counter = { val: 1 };
+    gsap.killTweensOf(counter);
+    counter.val = 1;
+    
     if (!isHover) {
       gsap.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.2)' });
     }
@@ -1424,7 +1427,7 @@ document.querySelectorAll('.stat-num').forEach(el => {
       duration: 1.5,
       ease: 'power2.out',
       onUpdate: () => {
-        el.innerText = Math.floor(counter.val) + (hasPercent ? '%' : '');
+        el.textContent = Math.floor(counter.val) + (hasPercent ? '%' : '');
       }
     });
   };
