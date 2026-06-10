@@ -1321,7 +1321,7 @@ function renderPortfolio() {
 
   sortedFolders.forEach(folder => {
     const card = document.createElement('div');
-    card.className = 'port-card stg folder-card fade-up';
+    card.className = 'port-card stg folder-card';
     card.onclick = () => openFolder(folder.title);
     
     card.innerHTML = `
