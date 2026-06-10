@@ -925,7 +925,7 @@ footer a .lucide{width:14px;height:14px}
     <div class="about-inner">
       <div class="about-left fade-up">
         <span class="label">About the Designer</span>
-        <h2 class="section-title">Shaping Brands<br>That Make <em id="word-local" data-words="Rural,Small,Regional,Community,Homegrown" style="cursor:pointer; transition:color 0.3s;">Local</em><br>Businesses Win.</h2>
+        <h2 class="section-title">Shaping Brands<br><span style="white-space:nowrap;">That Make <em id="word-local" data-words="Rural,Small,Regional,Community,Homegrown" style="cursor:pointer; transition:color 0.3s;">Local</em></span><br>Businesses Win.</h2>
       </div>
       <div class="about-right fade-up">
         <p>I'm Minj Store. I make professional design affordable for small businesses.</p>
@@ -1550,10 +1550,9 @@ if (wordLocal) {
     wordLocal.innerText = words[wordIdx];
   }, 2000);
 
-  // On hover, stop loop, force to "Local" and highlight
+  // On hover, stop loop and highlight current word
   wordLocal.addEventListener('mouseenter', () => {
     clearInterval(wordInterval);
-    wordLocal.innerText = originalWord;
     wordLocal.style.color = '#F5A623';
   });
 
