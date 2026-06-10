@@ -229,6 +229,9 @@ nav.scrolled{
   align-self: center;
   margin-left: -1rem;
 }
+@media(max-width:960px){
+  .hero-left { margin-left: 0; }
+}
 .hero-eyebrow {
   font-size: clamp(.88rem, 1.4vw, 1rem);
   color: rgba(255, 255, 255, 0.65);
@@ -303,6 +306,7 @@ nav.scrolled{
   .hero-right-content {
     justify-content: center;
     margin-bottom: 2.5rem;
+    margin-right: 0;
   }
 }
 
@@ -359,7 +363,6 @@ nav.scrolled{
   .hero-tagline {
     text-align: center;
     max-width: 100%;
-    padding: 0 1rem;
   }
 }
 
@@ -771,7 +774,10 @@ footer a .lucide{width:14px;height:14px}
       </div>
       
       <div class="hero-center-img-wrap" id="hero-img">
-        <img src="hero2.jpg" alt="Creative Director" loading="eager">
+        <picture>
+          <source media="(max-width: 768px)" srcset="hero2mobile.jpg">
+          <img src="hero2.jpg" alt="Creative Director" loading="eager">
+        </picture>
       </div>
       
       <div class="hero-cats" id="hero-cats">
