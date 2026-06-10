@@ -646,6 +646,7 @@ footer{
   flex-wrap:wrap;gap:1rem;color:var(--muted);font-size:.78rem;
   max-width:1080px;margin:0 auto;
 }
+.footer-left { display: flex; flex-direction: column; gap: 0.3rem; }
 .footer-logo{font-family:var(--font-head);font-weight:800;color:#fff;font-size:1rem}
 footer a{color:var(--muted);text-decoration:none;display:inline-flex;align-items:center;gap:.3rem}
 footer a:hover{color:var(--text)}
@@ -1160,8 +1161,10 @@ footer a .lucide{width:14px;height:14px}
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-logo">Minj Store.</div>
-  <p data-i18n="footer">© 2026 Minj Store · Design & Web Services</p>
+  <div class="footer-left">
+    <div class="footer-logo">Minj Store.</div>
+    <p data-i18n="footer">© 2026 Minj Store · Design & Web Services</p>
+  </div>
   <a href="#home"><i data-lucide="arrow-up"></i> <span data-i18n="footer.top">Back to top</span></a>
 </footer>
 
