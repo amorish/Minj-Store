@@ -417,31 +417,37 @@ nav.scrolled{
 .team-strip {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 1.5rem;
+  gap: 2rem;
   margin: 4.5rem auto 0;
 }
 @media(max-width: 640px){
   .team-strip {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 2rem;
   }
 }
 .team-card {
-  border-radius: 28px;
-  overflow: hidden;
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 1.5rem;
+  padding: 0;
   gap: 1.5rem;
-  transition: all .5s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.card-gulshan { background: #e0a85b; }
-.card-manish { background: #d23b4b; }
+.team-card:first-child {
+  border-right: 1px dashed rgba(255, 255, 255, 0.2);
+  padding-right: 2rem;
+}
+@media(max-width: 640px){
+  .team-card:first-child {
+    border-right: none;
+    padding-right: 0;
+    border-bottom: 1px dashed rgba(255, 255, 255, 0.2);
+    padding-bottom: 2rem;
+  }
+}
 
-.team-card:hover {
-  background: #1a1a1a;
-}
+.card-gulshan .team-img { border-color: #e0a85b; }
+.card-manish .team-img { border-color: #d23b4b; }
 
 .team-img {
   width: 90px;
@@ -451,6 +457,8 @@ nav.scrolled{
   object-fit: cover;
   object-position: center;
   filter: grayscale(100%);
+  border: 3px solid transparent;
+  padding: 3px;
   transition: all .5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .team-card:hover .team-img {
