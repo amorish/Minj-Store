@@ -446,23 +446,41 @@ nav.scrolled{
   }
 }
 
-.card-gulshan .team-img { border-color: #e0a85b; }
-.card-manish .team-img { border-color: #d23b4b; }
-
-.team-img {
+.team-img-wrap {
   width: 90px;
   height: 90px;
   flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.team-img-wrap::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   border-radius: 50%;
-  object-fit: cover;
-  object-position: center;
+  transition: background 0.4s ease;
+}
+.card-gulshan .team-img-wrap::before { background: #e0a85b; }
+.card-manish .team-img-wrap::before { background: #d23b4b; }
+
+.team-card:hover .team-img-wrap::before {
+  background: #333;
+}
+
+.team-img {
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 2;
   filter: grayscale(100%);
-  border: 3px solid transparent;
-  padding: 3px;
-  transition: all .5s cubic-bezier(0.25, 1, 0.5, 1);
+  transform-origin: bottom center;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .team-card:hover .team-img {
   filter: grayscale(0%);
+  transform: scale(1.15);
 }
 
 .team-info {
@@ -775,14 +793,18 @@ footer a .lucide{width:14px;height:14px}
     </div>
     <div class="team-strip fade-up" id="team-strip">
       <div class="team-card card-gulshan">
-        <img src="profiles/gulshanminj.webp" alt="Gulshan Minj" class="team-img" loading="lazy">
+        <div class="team-img-wrap">
+          <img src="profiles/gulshanminj.webp" alt="Gulshan Minj" class="team-img" loading="lazy">
+        </div>
         <div class="team-info">
           <div class="team-name">Gulshan Minj</div>
           <div class="team-role">Customer Handler, Cashier etc.</div>
         </div>
       </div>
       <div class="team-card card-manish">
-        <img src="profiles/manishoraon.webp" alt="Manish Oraon" class="team-img" loading="lazy">
+        <div class="team-img-wrap">
+          <img src="profiles/manishoraon.webp" alt="Manish Oraon" class="team-img" loading="lazy">
+        </div>
         <div class="team-info">
           <div class="team-name">Manish Oraon</div>
           <div class="team-role">Designer & Developer</div>
