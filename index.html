@@ -1069,8 +1069,8 @@ footer a .lucide{width:14px;height:14px}
       <!-- See All Button -->
       <div class="port-card stg" id="see-all-btn" onclick="togglePortfolio()" style="display:flex; flex-direction:column; justify-content:center; align-items:center; cursor:pointer; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:24px; min-height: 250px; transition: all 0.3s;">
         <span style="font-size: 1.1rem; font-weight: 600; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-          See All
-          <i data-lucide="chevron-down" style="width: 24px; height: 24px; color: var(--accent);"></i>
+          <span id="see-all-text">see all</span>
+          <i data-lucide="chevron-down" id="see-all-icon" style="width: 24px; height: 24px; color: var(--accent); transition: transform 0.3s;"></i>
         </span>
       </div>
 
@@ -1474,11 +1474,14 @@ function togglePortfolio() {
   const isExpanded = btn.classList.contains('expanded');
   const grid = document.getElementById('port-grid');
   
+  const textSpan = document.getElementById('see-all-text');
+  const icon = document.getElementById('see-all-icon');
+  
   if (isExpanded) {
     hiddenItems.forEach(item => item.style.display = 'none');
     btn.classList.remove('expanded');
-    btn.innerHTML = '<span style="font-size: 1.1rem; font-weight: 600; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">See All <i data-lucide="chevron-down" style="width: 24px; height: 24px; color: var(--accent);"></i></span>';
-    lucide.createIcons();
+    textSpan.innerText = 'see all';
+    icon.style.transform = 'rotate(0deg)';
     grid.insertBefore(btn, hiddenItems[0]); 
     document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
@@ -1487,8 +1490,8 @@ function togglePortfolio() {
       gsap.fromTo(item, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" });
     });
     btn.classList.add('expanded');
-    btn.innerHTML = '<span style="font-size: 1.1rem; font-weight: 600; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">See Less <i data-lucide="chevron-up" style="width: 24px; height: 24px; color: var(--accent);"></i></span>';
-    lucide.createIcons();
+    textSpan.innerText = 'see less';
+    icon.style.transform = 'rotate(180deg)';
     grid.appendChild(btn);
   }
   if (window.ScrollTrigger) ScrollTrigger.refresh();
