@@ -1401,7 +1401,27 @@ gsap.from('#proc-list .stg', { scrollTrigger:{ trigger:'#proc-list', start:'top 
 gsap.from('#img-strip .img-strip-card', { scrollTrigger:{ trigger:'#img-strip', start:'top 80%' }, opacity:0, y:50, duration:.8, stagger:.15, ease:'power3.out' });
 
 document.querySelectorAll('.stat-num').forEach(el => {
-  ScrollTrigger.create({ trigger:el, start:'top 90%', once:true, onEnter:() => gsap.from(el, { opacity:0, y:20, duration:.6, ease:'back.out(1.2)' }) });
+  let targetText = el.innerText;
+  let hasPercent = targetText.includes('%');
+  let targetNum = parseInt(targetText.replace(/\D/g, '')) || 0;
+  let counter = { val: 1 };
+  
+  ScrollTrigger.create({ 
+    trigger: el, 
+    start: 'top 90%', 
+    once: true, 
+    onEnter: () => {
+      gsap.fromTo(el, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.2)' });
+      gsap.to(counter, {
+        val: targetNum,
+        duration: 1.5,
+        ease: 'power2.out',
+        onUpdate: () => {
+          el.innerText = Math.floor(counter.val) + (hasPercent ? '%' : '');
+        }
+      });
+    }
+  });
 });
 
 ScrollTrigger.create({ start:'top -60px', onToggle: self => document.querySelector('nav').classList.toggle('scrolled', self.isActive) });
