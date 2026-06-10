@@ -231,7 +231,7 @@ nav.scrolled{
   margin-right: 3rem;
 }
 @media(max-width:960px){
-  .hero-left { margin-left: -1.5rem; margin-right: 3rem; }
+  .hero-left { margin-left: 0; margin-right: 0; }
 }
 .hero-eyebrow {
   font-size: clamp(.88rem, 1.4vw, 1rem);
@@ -268,7 +268,7 @@ nav.scrolled{
     margin-top: 2rem;
   }
 }
-}
+.hero-cat {
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   cursor: default;
 }
@@ -301,13 +301,12 @@ nav.scrolled{
 }
 @media(max-width:960px){
   .hero-right-content {
-    justify-content: flex-end;
+    justify-content: flex-start;
     margin-bottom: 2.5rem;
-    margin-right: -1.5rem;
-    margin-left: 3rem;
+    margin-right: 0;
+    margin-left: 0;
   }
 }
-
 .hero-center-img-wrap {
   position: absolute;
   bottom: 0;
@@ -1217,7 +1216,7 @@ const tl = gsap.timeline({ defaults: { ease:'power3.out' } });
 tl.from('.hero-eyebrow', { opacity:0, y:20,  duration:.5 })
   .from('#hero-title',   { opacity:0, y:60,  duration:.9 }, '-=.3')
   .from('.hero-cats .hero-cat', { opacity:0, y:20, stagger:.12, duration:.5 }, '-=.4')
-  .from('#hero-img',     { opacity:0, scale:1.05, duration:1.2, ease:'power2.out' }, .2)
+  .from('#hero-img img', { opacity:0, scale:1.05, duration:1.2, ease:'power2.out' }, .2)
   .from('.hero-tagline', { opacity:0, x:20, duration:.6, clearProps: "all" }, '-=.4');
 
 gsap.utils.toArray('.fade-up').forEach(el => {
