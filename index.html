@@ -273,13 +273,8 @@ nav.scrolled{
     margin-top: 2rem;
   }
 }
-.hero-cat {
-  transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
-  cursor: default;
-}
-.hero-cat:hover {
-  transform: translateY(-4px) !important;
-}
+.hero-cat { cursor: default; }
+
 .hero-cat-num {
   font-family: var(--font-head);
   font-size: .75rem;
@@ -610,7 +605,7 @@ section{padding:5rem 0}
 .port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1rem}
 .port-card{
   background:var(--bg);border:1px solid var(--border);border-radius:var(--r);
-  overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;
+  overflow:hidden;transition:border-color .3s,box-shadow .3s;
   display: flex; flex-direction: column; height: 100%;
 }
 .port-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(245,166,35,.06)}
@@ -1565,6 +1560,13 @@ if (wordLocal) {
 }
 
 
+
+
+// Hero cat hover using GSAP to avoid transition conflicts
+document.querySelectorAll('.hero-cat').forEach(cat => {
+  cat.addEventListener('mouseenter', () => gsap.to(cat, { y: -4, duration: 0.3, ease: 'power2.out', overwrite: 'auto' }));
+  cat.addEventListener('mouseleave', () => gsap.to(cat, { y: 0, duration: 0.3, ease: 'power2.out', overwrite: 'auto' }));
+});
 </script>
 </body>
 </html>
