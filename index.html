@@ -469,11 +469,23 @@ nav.scrolled{
   background: #333;
 }
 
+.team-img-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 90px;
+  height: 180px;
+  border-radius: 0 0 45px 45px;
+  overflow: hidden;
+  z-index: 2;
+  transform: translateZ(0);
+}
 .team-img {
   width: 100%;
   height: auto;
-  position: relative;
-  z-index: 2;
+  position: absolute;
+  bottom: 0;
+  left: 0;
   filter: grayscale(100%);
   transform-origin: bottom center;
   transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
@@ -797,7 +809,9 @@ footer a .lucide{width:14px;height:14px}
     <div class="team-strip fade-up" id="team-strip">
       <div class="team-card card-gulshan">
         <div class="team-img-wrap">
-          <img src="profiles/gulshanminj.webp" alt="Gulshan Minj" class="team-img" loading="lazy">
+          <div class="team-img-inner">
+            <img src="profiles/gulshanminj.webp" alt="Gulshan Minj" class="team-img" loading="lazy">
+          </div>
         </div>
         <div class="team-info">
           <div class="team-name">Gulshan Minj</div>
@@ -806,7 +820,9 @@ footer a .lucide{width:14px;height:14px}
       </div>
       <div class="team-card card-manish">
         <div class="team-img-wrap">
-          <img src="profiles/manishoraon.webp" alt="Manish Oraon" class="team-img" loading="lazy">
+          <div class="team-img-inner">
+            <img src="profiles/manishoraon.webp" alt="Manish Oraon" class="team-img" loading="lazy">
+          </div>
         </div>
         <div class="team-info">
           <div class="team-name">Manish Oraon</div>
