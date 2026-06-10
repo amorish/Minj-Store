@@ -1427,7 +1427,7 @@ document.querySelectorAll('.stat-num').forEach(el => {
       duration: 1.5,
       ease: 'power2.out',
       onUpdate: () => {
-        el.textContent = Math.floor(counter.val) + (hasPercent ? '%' : '');
+        el.textContent = Math.round(counter.val) + (hasPercent ? '%' : '');
       }
     });
   };
@@ -1445,27 +1445,28 @@ document.querySelectorAll('.stat-num').forEach(el => {
 
 ScrollTrigger.create({ start:'top -60px', onToggle: self => document.querySelector('nav').classList.toggle('scrolled', self.isActive) });
 
-document.addEventListener('mouseover', e => {
-  const t = e.target.closest('#word-local');
-  if (t) {
-    if(!t.dataset.original) t.dataset.original = t.innerText;
-    let words = (t.dataset.words || "Rural,Small,Regional,Community,Homegrown").split(',');
-    t.dataset.wordIdx = 0;
-    t.wordInterval = setInterval(() => {
-      t.innerText = words[t.dataset.wordIdx];
-      t.dataset.wordIdx = (parseInt(t.dataset.wordIdx) + 1) % words.length;
+const wordLocal = document.getElementById('word-local');
+if (wordLocal) {
+  wordLocal.addEventListener('mouseenter', () => {
+    if (wordLocal.wordInterval) return;
+    if (!wordLocal.dataset.original) wordLocal.dataset.original = wordLocal.innerText;
+    let words = (wordLocal.dataset.words || "Rural,Small,Regional,Community,Homegrown").split(',');
+    wordLocal.dataset.wordIdx = 0;
+    wordLocal.wordInterval = setInterval(() => {
+      wordLocal.innerText = words[wordLocal.dataset.wordIdx];
+      wordLocal.dataset.wordIdx = (parseInt(wordLocal.dataset.wordIdx) + 1) % words.length;
     }, 350);
-    t.style.color = '#F5A623';
-  }
-});
-document.addEventListener('mouseout', e => {
-  const t = e.target.closest('#word-local');
-  if (t) {
-    clearInterval(t.wordInterval);
-    t.innerText = t.dataset.original;
-    t.style.color = '';
-  }
-});
+    wordLocal.style.color = '#F5A623';
+  });
+  wordLocal.addEventListener('mouseleave', () => {
+    if (wordLocal.wordInterval) {
+      clearInterval(wordLocal.wordInterval);
+      wordLocal.wordInterval = null;
+      wordLocal.innerText = wordLocal.dataset.original;
+      wordLocal.style.color = '';
+    }
+  });
+}
 
 </script>
 </body>
