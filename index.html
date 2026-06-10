@@ -1049,7 +1049,7 @@ footer a .lucide{width:14px;height:14px}
       </a>
 
       <!-- 5. St George High School (Combined) -->
-      <div class="port-card stg" style="display:block;">
+      <div class="port-card stg port-hidden-item" style="display:none;">
         <a href="past%20work/2024%20st%20george/output/ST%20GEORGE%20HIGH%20SCHOOL%20class%206%20math%20question%20paper.pdf" target="_blank" style="text-decoration:none; color:inherit; display:block;">
           <div class="port-thumb">
             <img src="past%20work/2024%20st%20george/output/ST%20GEORGE%20HIGH%20SCHOOL%20class%206%20math%20question%20paper.png" alt="Question Paper" loading="lazy" style="object-fit: cover; object-position: center top;">
@@ -1475,13 +1475,13 @@ function togglePortfolio() {
   const grid = document.getElementById('port-grid');
   
   const textSpan = document.getElementById('see-all-text');
-  const icon = document.getElementById('see-all-icon');
+  const icon = document.getElementById('see-all-icon') || btn.querySelector('svg');
   
   if (isExpanded) {
     hiddenItems.forEach(item => item.style.display = 'none');
     btn.classList.remove('expanded');
     textSpan.innerText = 'see all';
-    icon.style.transform = 'rotate(0deg)';
+    if (icon) icon.style.transform = 'rotate(0deg)';
     grid.insertBefore(btn, hiddenItems[0]); 
     document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
@@ -1491,7 +1491,7 @@ function togglePortfolio() {
     });
     btn.classList.add('expanded');
     textSpan.innerText = 'see less';
-    icon.style.transform = 'rotate(180deg)';
+    if (icon) icon.style.transform = 'rotate(180deg)';
     grid.appendChild(btn);
   }
   if (window.ScrollTrigger) ScrollTrigger.refresh();
