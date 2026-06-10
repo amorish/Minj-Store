@@ -1157,7 +1157,7 @@ const folderData = {
       {
         "title": "General",
         "items": [
-          "past work/2025 Pragati/BANNER - pragati.png",
+          "past work/2025 Pragati/BANNER - pragati.webp",
           "past work/2025 Pragati/Demo Lecture.gif",
           "past work/2025 Pragati/pragati poster.webp"
         ]
@@ -1310,6 +1310,8 @@ const folderData = {
   }
 };
 
+let isPortfolioExpanded = false;
+
 function renderPortfolio() {
   const grid = document.getElementById('port-grid');
   grid.innerHTML = '';
@@ -1319,7 +1321,10 @@ function renderPortfolio() {
     .map(key => ({ title: key, ...folderData[key] }))
     .sort((a, b) => b.count - a.count);
 
-  sortedFolders.forEach(folder => {
+  const displayCount = isPortfolioExpanded ? sortedFolders.length : 5;
+  const itemsToShow = sortedFolders.slice(0, displayCount);
+
+  itemsToShow.forEach(folder => {
     const card = document.createElement('div');
     card.className = 'port-card stg folder-card';
     card.onclick = () => openFolder(folder.title);
@@ -1335,6 +1340,32 @@ function renderPortfolio() {
     `;
     grid.appendChild(card);
   });
+
+  if (sortedFolders.length > 5) {
+    const toggleCard = document.createElement('div');
+    toggleCard.className = 'port-card stg folder-card';
+    toggleCard.style.cursor = 'pointer';
+    toggleCard.style.display = 'flex';
+    toggleCard.style.alignItems = 'center';
+    toggleCard.style.justifyContent = 'center';
+    toggleCard.style.background = 'rgba(255,255,255,0.02)';
+    toggleCard.style.border = '1px dashed rgba(255,255,255,0.1)';
+    toggleCard.style.minHeight = '100%';
+    
+    toggleCard.onclick = () => {
+      isPortfolioExpanded = !isPortfolioExpanded;
+      renderPortfolio();
+      if (typeof ScrollTrigger !== 'undefined') ScrollTrigger.refresh();
+    };
+    
+    toggleCard.innerHTML = `
+      <div style="text-align: center; color: #aaa; font-size: 1.1rem; font-weight: 500; display:flex; align-items:center; gap:0.5rem; transition: color 0.3s ease;" onmouseover="this.style.color='#fff'" onmouseout="this.style.color='#aaa'">
+        ${isPortfolioExpanded ? 'See Less <i data-lucide="minus"></i>' : 'See More <i data-lucide="plus"></i>'}
+      </div>
+    `;
+    grid.appendChild(toggleCard);
+    try { lucide.createIcons(); } catch(e) {}
+  }
 }
 
 function openFolder(folderKey) {
