@@ -611,13 +611,14 @@ section{padding:5rem 0}
 .port-card{
   background:var(--bg);border:1px solid var(--border);border-radius:var(--r);
   overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;
+  display: flex; flex-direction: column; height: 100%;
 }
 .port-card:hover{border-color:var(--accent);box-shadow:0 8px 24px rgba(245,166,35,.06)}
 .port-thumb{aspect-ratio:4/3;overflow:hidden;position:relative}
 .port-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
 .port-card:hover .port-thumb img{transform:scale(1.01)}
 
-.port-info{padding:1.1rem}
+.port-info{padding:1.1rem; flex-grow: 1; display: flex; flex-direction: column; justify-content: flex-end;}
 .port-client{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.2rem}
 .port-title{font-family:var(--font-head);font-weight:700;font-size:.88rem}
 
@@ -1368,7 +1369,8 @@ function renderPortfolio() {
     toggleCard.style.justifyContent = 'center';
     toggleCard.style.background = 'rgba(255,255,255,0.02)';
     toggleCard.style.border = '1px dashed rgba(255,255,255,0.1)';
-    toggleCard.style.minHeight = '100%';
+    toggleCard.style.height = '100%';
+    toggleCard.style.flexGrow = '1';
     
     toggleCard.onclick = () => {
       isPortfolioExpanded = !isPortfolioExpanded;
