@@ -1148,7 +1148,7 @@ body.cursor-hover .cursor-outline {
 
 
 <!-- SCRIPTS -->
-<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
+<script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
@@ -1362,17 +1362,19 @@ function setLang(lang) {
 
 /* ═══ INIT ═══ */
 document.addEventListener('DOMContentLoaded', () => {
-  lucide.createIcons();
-  setLang(localStorage.getItem('morish-lang') || 'en');
+  try { lucide.createIcons(); } catch(e) { console.warn('Lucide icons failed:', e); }
+  try { setLang(localStorage.getItem('morish-lang') || 'en'); } catch(e) { console.warn('setLang failed:', e); }
 
   const btn = document.getElementById('lang-btn');
   const dd  = document.getElementById('lang-dd');
-  btn.addEventListener('click', e => { e.stopPropagation(); dd.classList.toggle('open'); });
-  document.addEventListener('click', () => dd.classList.remove('open'));
-  dd.addEventListener('click', e => e.stopPropagation());
-  document.querySelectorAll('.lang-opt').forEach(opt => {
-    opt.addEventListener('click', () => { setLang(opt.dataset.lang); dd.classList.remove('open'); });
-  });
+  if (btn && dd) {
+    btn.addEventListener('click', e => { e.stopPropagation(); dd.classList.toggle('open'); });
+    document.addEventListener('click', () => dd.classList.remove('open'));
+    dd.addEventListener('click', e => e.stopPropagation());
+    document.querySelectorAll('.lang-opt').forEach(opt => {
+      opt.addEventListener('click', () => { setLang(opt.dataset.lang); dd.classList.remove('open'); });
+    });
+  }
 });
 
 
