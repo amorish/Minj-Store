@@ -1118,7 +1118,7 @@ const folderData = {
   "St George": {
     "id": "2024 st george",
     "count": 12,
-    "thumb": "past work/2024 st george/demand/hfxontwjvjaktbz2om39.webp",
+    "thumb": "past work/2024 st george/supply/class7/1.webp",
     "groups": [
       {
         "title": "Demand",
@@ -1147,12 +1147,13 @@ const folderData = {
           "past work/2024 st george/supply/class7/3.webp"
         ]
       }
-    ]
+    ],
+    "thumbPosition": "top"
   },
   "Pragati": {
     "id": "2025 Pragati",
     "count": 5,
-    "thumb": "past work/2025 Pragati/pragati poster.webp",
+    "thumb": "past work/2025 Pragati/BANNER - pragati.webp",
     "groups": [
       {
         "title": "General",
@@ -1169,7 +1170,8 @@ const folderData = {
           "past work/2025 Pragati/admission form/2.webp"
         ]
       }
-    ]
+    ],
+    "thumbFit": "contain"
   },
   "Shivaji Sangha": {
     "id": "2025 Shivaji Sangha",
@@ -1277,7 +1279,7 @@ const folderData = {
   "Mahakumbh": {
     "id": "mahakumbh",
     "count": 4,
-    "thumb": "past work/mahakumbh/used pictures of real life/banner use case 1.jpg",
+    "thumb": "past work/mahakumbh/used pictures of real life/id card real use 1.jpg",
     "groups": [
       {
         "title": "General",
@@ -1293,7 +1295,8 @@ const folderData = {
           "past work/mahakumbh/used pictures of real life/id card real use 2.jpg"
         ]
       }
-    ]
+    ],
+    "thumbPosition": "top"
   },
   "Mahi Furniture": {
     "id": "Mahi Furniture",
@@ -1317,9 +1320,20 @@ function renderPortfolio() {
   grid.innerHTML = '';
   
   // Convert object to array and sort by count descending
+  const predefinedOrder = ['Vasundhara', 'St George', 'Mahakumbh', 'Shivaji Sangha', 'Pragati'];
+  
   const sortedFolders = Object.keys(folderData)
     .map(key => ({ title: key, ...folderData[key] }))
-    .sort((a, b) => b.count - a.count);
+    .sort((a, b) => {
+      const idxA = predefinedOrder.indexOf(a.title);
+      const idxB = predefinedOrder.indexOf(b.title);
+      
+      if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+      if (idxA !== -1) return -1;
+      if (idxB !== -1) return 1;
+      
+      return b.count - a.count;
+    });
 
   const displayCount = isPortfolioExpanded ? sortedFolders.length : 5;
   const itemsToShow = sortedFolders.slice(0, displayCount);
@@ -1331,7 +1345,7 @@ function renderPortfolio() {
     
     card.innerHTML = `
       <div class="port-thumb skeleton">
-        <img src="${folder.thumb}" alt="${folder.title}" loading="lazy" onload="this.parentElement.classList.remove('skeleton')" style="opacity:1; transition: opacity 0.5s ease;">
+        <img src="${folder.thumb}" alt="${folder.title}" loading="lazy" onload="this.parentElement.classList.remove('skeleton')" style="opacity:1; transition: opacity 0.5s ease; ${folder.thumbFit ? 'object-fit: ' + folder.thumbFit + ';' : ''} ${folder.thumbPosition ? 'object-position: ' + folder.thumbPosition + ';' : ''}">
       </div>
       <div class="port-info">
         <div class="port-client">${folder.count} Items</div>
