@@ -1236,20 +1236,6 @@ const folderData = {
       }
     ]
   },
-  "Cineq Website Logo": {
-    "id": "2026 cineq website logo",
-    "count": 2,
-    "thumb": "past work/2026 cineq website logo/favicon.webp",
-    "groups": [
-      {
-        "title": "General",
-        "items": [
-          "past work/2026 cineq website logo/favicon.webp",
-          "past work/2026 cineq website logo/og logo.webp"
-        ]
-      }
-    ]
-  },
   "Canceled Project": {
     "id": "canceled project",
     "count": 1,
@@ -1295,8 +1281,7 @@ const folderData = {
           "past work/mahakumbh/used pictures of real life/id card real use 2.jpg"
         ]
       }
-    ],
-    "thumbPosition": "top"
+    ]
   },
   "Mahi Furniture": {
     "id": "Mahi Furniture",
@@ -1310,6 +1295,22 @@ const folderData = {
         ]
       }
     ]
+  },
+  "Cineq Website (Personal Project)": {
+    "id": "2026 cineq website (Personal Project)",
+    "count": 3,
+    "thumb": "past work/2026 cineq website (Personal Project)/cineq landing page.webp",
+    "groups": [
+      {
+        "title": "General",
+        "items": [
+          "past work/2026 cineq website (Personal Project)/cineq landing page.webp",
+          "past work/2026 cineq website (Personal Project)/favicon.webp",
+          "past work/2026 cineq website (Personal Project)/og logo.webp"
+        ]
+      }
+    ],
+    "link": "#"
   }
 };
 
@@ -1391,6 +1392,23 @@ function openFolder(folderKey) {
   grid.innerHTML = '';
   
   const data = folderData[folderKey];
+  
+  if (data && data.link) {
+    const linkWrap = document.createElement('div');
+    linkWrap.style.marginBottom = '1.5rem';
+    linkWrap.style.width = '100%';
+    
+    const linkEl = document.createElement('a');
+    linkEl.href = data.link;
+    linkEl.target = '_blank';
+    linkEl.className = 'btn-pill-white';
+    linkEl.style.display = 'inline-flex';
+    linkEl.innerHTML = '<span>Visit Website</span><i data-lucide="external-link" style="width:16px;height:16px;margin-left:8px;"></i>';
+    
+    linkWrap.appendChild(linkEl);
+    grid.appendChild(linkWrap);
+  }
+  
   if (data && data.groups) {
     data.groups.forEach(group => {
       // Add group title if there are items and it's not the only group called 'General'
@@ -1416,6 +1434,7 @@ function openFolder(folderKey) {
     });
   }
   
+  try { lucide.createIcons(); } catch(e){}
   modal.classList.add('active');
   document.body.style.overflow = 'hidden';
 }
