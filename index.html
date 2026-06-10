@@ -1372,6 +1372,21 @@ bn: {
 /* ═══ INIT ═══ */
 document.addEventListener('DOMContentLoaded', () => {
   try { lucide.createIcons(); } catch(e) { console.warn('Lucide icons failed:', e); }
+  
+  // Apply English translations from the T dictionary
+  document.querySelectorAll('[data-i18n]').forEach(el => {
+    const key = el.getAttribute('data-i18n');
+    if (T['en'] && T['en'][key]) {
+      el.innerHTML = T['en'][key];
+    }
+  });
+  
+  document.querySelectorAll('[data-i18n-html]').forEach(el => {
+    const key = el.getAttribute('data-i18n-html');
+    if (T['en'] && T['en'][key]) {
+      el.innerHTML = T['en'][key];
+    }
+  });
 });
 
 
