@@ -231,7 +231,12 @@ nav.scrolled{
   margin-right: 3rem;
 }
 @media(max-width:960px){
-  .hero-left { margin-left: 0; margin-right: 0; }
+  .hero-left { 
+    margin-left: -1.5rem; 
+    margin-right: 1.5rem; 
+    border-radius: 0 24px 24px 0 !important;
+    border-left: none !important;
+  }
 }
 .hero-eyebrow {
   font-size: clamp(.88rem, 1.4vw, 1rem);
@@ -301,10 +306,10 @@ nav.scrolled{
 }
 @media(max-width:960px){
   .hero-right-content {
-    justify-content: flex-start;
+    justify-content: flex-end;
     margin-bottom: 2.5rem;
-    margin-right: 0;
-    margin-left: 0;
+    margin-right: -1.5rem;
+    margin-left: 1.5rem;
   }
 }
 .hero-center-img-wrap {
@@ -366,6 +371,8 @@ nav.scrolled{
   .hero-tagline {
     text-align: left;
     max-width: 100%;
+    border-radius: 24px 0 0 24px !important;
+    border-right: none !important;
   }
 }
 
@@ -1213,11 +1220,12 @@ function sendEmail(e) {
 gsap.registerPlugin(ScrollTrigger);
 
 const tl = gsap.timeline({ defaults: { ease:'power3.out' } });
-tl.from('.hero-eyebrow', { opacity:0, y:20,  duration:.5 })
-  .from('#hero-title',   { opacity:0, y:60,  duration:.9 }, '-=.3')
+tl.from('.hero-left',    { opacity:0, x:-40, duration:1 })
+  .from('.hero-eyebrow', { opacity:0, y:10,  duration:.5 }, '-=.6')
+  .from('#hero-title',   { opacity:0, y:20,  duration:.7 }, '-=.3')
   .from('.hero-cats .hero-cat', { opacity:0, y:20, stagger:.12, duration:.5 }, '-=.4')
   .from('#hero-img img', { opacity:0, scale:1.05, duration:1.2, ease:'power2.out' }, .2)
-  .from('.hero-tagline', { opacity:0, x:20, duration:.6, clearProps: "all" }, '-=.4');
+  .from('.hero-tagline', { opacity:0, x:40, duration:1, clearProps: "all" }, '<.4');
 
 gsap.utils.toArray('.fade-up').forEach(el => {
   gsap.from(el, { scrollTrigger:{ trigger:el, start:'top 88%', toggleActions:'play none none reverse' }, opacity:0, y:40, duration:.8, ease:'power3.out' });
