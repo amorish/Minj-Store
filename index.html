@@ -594,8 +594,6 @@ section{padding:5rem 0}
 .svc-card{background:var(--surface);padding:1.6rem;transition:background .2s;cursor:default}
 .svc-card:hover{background:var(--surface2)}
 .svc-num{font-family:var(--font-head);font-weight:800;font-size:.62rem;color:var(--accent);letter-spacing:2px;margin-bottom:.6rem;display:block}
-.svc-ico{color:var(--accent);margin-bottom:.6rem;display:block}
-.svc-ico .lucide{width:26px;height:26px}
 .svc-name{font-family:var(--font-head);font-weight:700;font-size:.93rem;margin-bottom:.35rem}
 .svc-desc{color:var(--muted);font-size:.8rem;line-height:1.55}
 
@@ -608,10 +606,10 @@ section{padding:5rem 0}
   background:var(--bg);border:1px solid var(--border);border-radius:var(--r);
   overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s;
 }
-.port-card:hover{transform:translateY(-5px) !important;border-color:var(--accent);box-shadow:0 16px 40px rgba(245,166,35,.08)}
-.port-thumb{height:200px;overflow:hidden;position:relative}
-.port-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
-.port-card:hover .port-thumb img{transform:scale(1.06)}
+.port-card:hover{transform:translateY(-2px) !important;border-color:var(--accent);box-shadow:0 8px 24px rgba(245,166,35,.06)}
+.port-thumb{aspect-ratio:4/3;overflow:hidden;position:relative}
+.port-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.port-card:hover .port-thumb img{transform:scale(1.03)}
 .port-chip{
   position:absolute;top:.75rem;left:.75rem;
   background:rgba(0,0,0,.7);backdrop-filter:blur(8px);
@@ -912,63 +910,54 @@ footer a .lucide{width:14px;height:14px}
 
       <div class="svc-card stg">
         <span class="svc-num">01</span>
-        <span class="svc-ico"><i data-lucide="credit-card"></i></span>
         <div class="svc-name">Visiting Card (Single / Double Sided)</div>
         <div class="svc-desc">Clean, professional single or double-sided visiting cards designed with your branding and contact info. Print-ready high-resolution file.</div>
       </div>
 
       <div class="svc-card stg">
         <span class="svc-num">02</span>
-        <span class="svc-ico"><i data-lucide="layers"></i></span>
         <div class="svc-name">Logo (Text Only / With Icon)</div>
         <div class="svc-desc">Typography-based or custom icon logos. Clean, scalable, and professional brand marks that make your business stand out.</div>
       </div>
 
       <div class="svc-card stg">
         <span class="svc-num">03</span>
-        <span class="svc-ico"><i data-lucide="image"></i></span>
         <div class="svc-name">Flex Banner (Simple / With Photos)</div>
         <div class="svc-desc">Text-based or photo-integrated banners for shops and events. Professional layout and editing. Print-ready file in any size.</div>
       </div>
 
       <div class="svc-card stg">
         <span class="svc-num">04</span>
-        <span class="svc-ico"><i data-lucide="sparkles"></i></span>
         <div class="svc-name">Festival Post (Single / Set of 5)</div>
         <div class="svc-desc">Branded festival greetings for WhatsApp and social media. Get a single post or a consistent 5-post pack covering major occasions.</div>
       </div>
 
       <div class="svc-card stg">
         <span class="svc-num">05</span>
-        <span class="svc-ico"><i data-lucide="file-text"></i></span>
         <div class="svc-name">Question Paper (Plain / Formatted)</div>
         <div class="svc-desc">Clean question paper layouts for coaching centres and schools. Available in simple or fully formatted styles with marks distribution.</div>
       </div>
 
       <div class="svc-card stg">
         <span class="svc-num">06</span>
-        <span class="svc-ico"><i data-lucide="award"></i></span>
         <div class="svc-name">Certificate / ID Card</div>
         <div class="svc-desc">Reusable templates for schools, clubs, and organizations. Design once, print many.</div>
       </div>
 
       <div class="svc-card stg">
         <span class="svc-num">07</span>
-        <span class="svc-ico"><i data-lucide="map-pin"></i></span>
         <div class="svc-name">Google Map Listing</div>
         <div class="svc-desc">Get your business on Google Maps. New customers find you automatically. One-time setup.</div>
       </div>
 
       <div class="svc-card stg">
         <span class="svc-num">08</span>
-        <span class="svc-ico"><i data-lucide="globe"></i></span>
         <div class="svc-name">Website (1 Page / 3 Pages)</div>
         <div class="svc-desc">Mobile responsive, fast loading business websites. Choose a single page or multi-page layout for a professional online presence.</div>
       </div>
 
       <div class="svc-card stg" style="opacity: 0.75; display: flex; flex-direction: column; justify-content: center;">
         <span class="svc-num">++</span>
-        <span class="svc-ico"><i data-lucide="sparkles"></i></span>
         <div class="svc-name">Coming Soon</div>
         <div class="svc-desc">Have another design or web project in mind? Contact me and let's discuss.</div>
       </div>
@@ -1068,9 +1057,9 @@ footer a .lucide{width:14px;height:14px}
 
       <!-- See All Button -->
       <div class="port-card stg" id="see-all-btn" onclick="togglePortfolio()" style="display:flex; flex-direction:column; justify-content:center; align-items:center; cursor:pointer; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:24px; min-height: 250px; transition: all 0.3s;">
-        <span style="font-size: 1.1rem; font-weight: 600; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
-          <span id="see-all-text">see all</span>
-          <i data-lucide="chevron-down" id="see-all-icon" style="width: 24px; height: 24px; color: var(--accent); transition: transform 0.3s;"></i>
+        <span style="font-size: 1.3rem; font-weight: 700; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; letter-spacing: 0.5px;">
+          <span id="see-all-text">see more</span>
+          <i data-lucide="chevron-down" id="see-all-icon" style="width: 28px; height: 28px; color: var(--accent); transition: transform 0.3s;"></i>
         </span>
       </div>
 
@@ -1317,7 +1306,7 @@ function togglePortfolio() {
   if (isExpanded) {
     hiddenItems.forEach(item => item.style.display = 'none');
     btn.classList.remove('expanded');
-    textSpan.innerText = 'see all';
+    textSpan.innerText = 'see more';
     if (icon) icon.style.transform = 'rotate(0deg)';
     grid.insertBefore(btn, hiddenItems[0]); 
     document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
