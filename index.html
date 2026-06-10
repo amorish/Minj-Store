@@ -621,6 +621,42 @@ section{padding:5rem 0}
 .port-client{font-size:.66rem;color:var(--muted);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:.2rem}
 .port-title{font-family:var(--font-head);font-weight:700;font-size:.88rem}
 
+/* ─── MASONRY MODAL ─────────────────────────────────────── */
+.folder-card { cursor: pointer; }
+.masonry-modal {
+  position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(12px);
+  z-index: 9999; display: none; opacity: 0;
+  flex-direction: column; align-items: center; justify-content: flex-start;
+  overflow-y: auto; overflow-x: hidden;
+  padding: 2rem 1rem; transition: opacity 0.3s ease;
+}
+.masonry-modal.active { display: flex; opacity: 1; }
+.masonry-modal-close {
+  position: absolute; top: 1.5rem; right: 1.5rem;
+  background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff; width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; z-index: 10000; transition: all 0.3s;
+}
+.masonry-modal-close:hover { background: var(--accent); color: #000; transform: scale(1.1); }
+.masonry-modal-title {
+  font-family: var(--font-head); font-weight: 800; font-size: 2rem;
+  color: #fff; margin-bottom: 2rem; text-align: center; margin-top: 1rem;
+}
+.masonry-grid {
+  column-count: 3; column-gap: 1rem; width: 100%; max-width: 1200px;
+}
+.masonry-item {
+  break-inside: avoid; margin-bottom: 1rem; border-radius: 12px;
+  overflow: hidden; background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.masonry-item img {
+  width: 100%; height: auto; display: block; object-fit: cover;
+}
+@media(max-width: 900px) { .masonry-grid { column-count: 2; } }
+@media(max-width: 600px) { .masonry-grid { column-count: 1; } }
 /* ─── PROCESS ───────────────────────────────────────────── */
 #process{background:var(--bg)}
 .proc-inner{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
@@ -994,162 +1030,101 @@ footer a .lucide{width:14px;height:14px}
     </div>
     <div class="port-grid" id="port-grid">
 
-      <!-- 1. IRPE Logo -->
-      <a href="past%20work/2025%20side%20project/irpe%20logo%20design.pdf" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
+      <!-- 1. St George -->
+      <div class="port-card stg folder-card" onclick="openFolder('2024 st george')">
         <div class="port-thumb">
-          <img src="past%20work/2025%20side%20project/irpe%20logo%20design.png" alt="Logo Design" loading="lazy" style="object-fit: cover; object-position: center;">
-          <span class="port-chip">Logo</span>
+          <img src="past%20work/2024%20st%20george/output/class6/1.webp" alt="St George" loading="lazy">
+          <span class="port-chip" style="display:flex;align-items:center;gap:4px;"><i data-lucide="folder" style="width:12px;height:12px;"></i> Folder</span>
         </div>
         <div class="port-info">
-          <div class="port-client">IRPE</div>
-          <div class="port-title">IRPE Logo Design</div>
-        </div>
-      </a>
-
-      <!-- 2. Vasundhara Branding -->
-      <a href="past%20work/2025%20vasundhara/buisinessCard.png" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
-        <div class="port-thumb">
-          <img src="past%20work/2025%20vasundhara/buisinessCard.png" alt="Business Card" loading="lazy" style="object-fit: cover; object-position: center;">
-          <span class="port-chip">Business Card</span>
-        </div>
-        <div class="port-info">
-          <div class="port-client">Vasundhara Nursery</div>
-          <div class="port-title">Vasundhara Business Card</div>
-        </div>
-      </a>
-
-      <a href="past%20work/2025%20vasundhara/TitleBanner.svg" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
-        <div class="port-thumb">
-          <img src="past%20work/2025%20vasundhara/TitleBanner.svg" alt="Title Banner" loading="lazy" style="object-fit: cover; object-position: center;">
-          <span class="port-chip">Banner</span>
-        </div>
-        <div class="port-info">
-          <div class="port-client">Vasundhara Nursery</div>
-          <div class="port-title">Vasundhara Title Banner</div>
-        </div>
-      </a>
-
-      <!-- 3. Pragati Poster (and PDF) -->
-      <a href="past%20work/2025%20Pragati/PRAGATI_STUDY_CENTRE%20Admission_Form%20-%20(clean).pdf" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
-        <div class="port-thumb">
-          <img src="past%20work/2025%20Pragati/pragati%20poster.png" alt="Poster" loading="lazy" style="object-fit: cover; object-position: center top;">
-          <span class="port-chip">Poster / Form</span>
-        </div>
-        <div class="port-info">
-          <div class="port-client">Pragati Study Centre</div>
-          <div class="port-title">Pragati Admission Form & Poster</div>
-        </div>
-      </a>
-
-      <!-- 4. Cineq Logo -->
-      <a href="past%20work/2026%20cineq/cineqLogoDarkmode.png" target="_blank" class="port-card stg" style="text-decoration:none; color:inherit; display:block;">
-        <div class="port-thumb">
-          <img src="past%20work/2026%20cineq/cineqLogoDarkmode.png" alt="Cineq Logo" loading="lazy" style="object-fit: cover; object-position: center; background: #000;">
-          <span class="port-chip">Logo</span>
-        </div>
-        <div class="port-info">
-          <div class="port-client">Cineq</div>
-          <div class="port-title">Cineq Darkmode Logo</div>
-        </div>
-      </a>
-
-      <!-- 5. St George High School (Combined) -->
-      <div class="port-card stg">
-        <a href="past%20work/2024%20st%20george/output/ST%20GEORGE%20HIGH%20SCHOOL%20class%206%20math%20question%20paper.pdf" target="_blank" style="text-decoration:none; color:inherit; display:block;">
-          <div class="port-thumb">
-            <img src="past%20work/2024%20st%20george/output/ST%20GEORGE%20HIGH%20SCHOOL%20class%206%20math%20question%20paper.png" alt="Question Paper" loading="lazy" style="object-fit: cover; object-position: center top;">
-            <span class="port-chip">Academic</span>
-          </div>
-        </a>
-        <div class="port-info">
-          <div class="port-client">St George High School</div>
-          <div class="port-title" style="margin-bottom: 10px;">Math Question Papers</div>
-          <div style="display: flex; gap: 15px;">
-             <a href="past%20work/2024%20st%20george/output/ST%20GEORGE%20HIGH%20SCHOOL%20class%206%20math%20question%20paper.pdf" target="_blank" style="color: #F5A623; text-decoration: none; font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Class 6 PDF</a>
-             <a href="past%20work/2024%20st%20george/output/ST%20GEORGE%20HIGH%20SCHOOL%20class%207%20math%20question%20paper.pdf" target="_blank" style="color: #F5A623; text-decoration: none; font-size: 0.9rem; font-weight: 600; display: inline-flex; align-items: center; gap: 4px;"><i data-lucide="file-text" style="width: 14px; height: 14px;"></i> Class 7 PDF</a>
-          </div>
+          <div class="port-client">12 Items</div>
+          <div class="port-title">2024 St George</div>
         </div>
       </div>
 
-      <!-- See All Button -->
-      <div class="port-card stg" id="see-all-btn" onclick="togglePortfolio()" style="display:flex; flex-direction:column; justify-content:center; align-items:center; cursor:pointer; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.1); border-radius:24px; min-height: 250px; transition: all 0.3s;">
-        <span style="font-size: 1.3rem; font-weight: 700; color: #fff; display: flex; flex-direction: column; align-items: center; gap: 0.5rem; letter-spacing: 0.5px;">
-          <span id="see-all-text">see more</span>
-          <i data-lucide="chevron-down" id="see-all-icon" style="width: 28px; height: 28px; color: var(--accent); transition: transform 0.3s;"></i>
-        </span>
+      <!-- 2. Pragati -->
+      <div class="port-card stg folder-card" onclick="openFolder('2025 Pragati')">
+        <div class="port-thumb">
+          <img src="past%20work/2025%20Pragati/pragati%20poster.webp" alt="Pragati" loading="lazy">
+          <span class="port-chip" style="display:flex;align-items:center;gap:4px;"><i data-lucide="folder" style="width:12px;height:12px;"></i> Folder</span>
+        </div>
+        <div class="port-info">
+          <div class="port-client">5 Items</div>
+          <div class="port-title">2025 Pragati</div>
+        </div>
       </div>
 
-      <!-- 6. Mahi Furniture Quotation -->
-      <a href="past%20work/MAHI%20FURNITURE.png" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
+      <!-- 3. Side Project -->
+      <div class="port-card stg folder-card" onclick="openFolder('2025 side project')">
         <div class="port-thumb">
-          <img src="past%20work/MAHI%20FURNITURE.png" alt="Quotation" loading="lazy" style="object-fit: cover; object-position: center top;">
-          <span class="port-chip">Quotation</span>
+          <img src="past%20work/2025%20side%20project/illustration%20replica/sleepy%20fox%20v1.webp" alt="Side Project" loading="lazy">
+          <span class="port-chip" style="display:flex;align-items:center;gap:4px;"><i data-lucide="folder" style="width:12px;height:12px;"></i> Folder</span>
         </div>
         <div class="port-info">
-          <div class="port-client">Mahi Furniture</div>
-          <div class="port-title">Mahi Furniture Quotation</div>
+          <div class="port-client">3 Items</div>
+          <div class="port-title">2025 Side Project</div>
         </div>
-      </a>
+      </div>
 
-      <!-- 7. Shok Bhoj Nimantran Card -->
-      <a href="past%20work/shok%20bhoj%20nimantran%20card.png" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
+      <!-- 4. Vasundhara -->
+      <div class="port-card stg folder-card" onclick="openFolder('2025 vasundhara')">
         <div class="port-thumb">
-          <img src="past%20work/shok%20bhoj%20nimantran%20card.png" alt="Invitation Card" loading="lazy" style="object-fit: cover; object-position: center top;">
-          <span class="port-chip">Invitation Card</span>
+          <img src="past%20work/2025%20vasundhara/buisinessCard.webp" alt="Vasundhara" loading="lazy">
+          <span class="port-chip" style="display:flex;align-items:center;gap:4px;"><i data-lucide="folder" style="width:12px;height:12px;"></i> Folder</span>
         </div>
         <div class="port-info">
-          <div class="port-client">Local Client</div>
-          <div class="port-title">Shok Bhoj Nimantran Card</div>
+          <div class="port-client">17 Items</div>
+          <div class="port-title">2025 Vasundhara</div>
         </div>
-      </a>
+      </div>
 
-      <!-- 8. Identity Card -->
-      <a href="past%20work/IDENTITY%20CARD.pdf" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
+      <!-- 5. Cineq -->
+      <div class="port-card stg folder-card" onclick="openFolder('2026 cineq')">
         <div class="port-thumb">
-          <img src="past%20work/IDENTITY%20CARD.png" alt="Identity Card" loading="lazy" style="object-fit: cover; object-position: center top;">
-          <span class="port-chip">ID Card</span>
+          <img src="past%20work/2026%20cineq/og%20logo.webp" alt="Cineq" loading="lazy" style="background:#111;">
+          <span class="port-chip" style="display:flex;align-items:center;gap:4px;"><i data-lucide="folder" style="width:12px;height:12px;"></i> Folder</span>
         </div>
         <div class="port-info">
-          <div class="port-client">Local Client</div>
-          <div class="port-title">Identity Card Design</div>
+          <div class="port-client">2 Items</div>
+          <div class="port-title">2026 Cineq</div>
         </div>
-      </a>
+      </div>
 
-      <!-- 9. Pragati Printed Banner -->
-      <a href="past%20work/2025%20Pragati/printed%20BANNER%20(1)-1.png" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
+      <!-- 6. Local -->
+      <div class="port-card stg folder-card" onclick="openFolder('Local')">
         <div class="port-thumb">
-          <img src="past%20work/2025%20Pragati/printed%20BANNER%20(1)-1.png" alt="Printed Banner" loading="lazy" style="object-fit: cover; object-position: center top;">
-          <span class="port-chip">Banner</span>
+          <img src="past%20work/Local/shok%20bhoj%20nimantran%20card.webp" alt="Local" loading="lazy">
+          <span class="port-chip" style="display:flex;align-items:center;gap:4px;"><i data-lucide="folder" style="width:12px;height:12px;"></i> Folder</span>
         </div>
         <div class="port-info">
-          <div class="port-client">Pragati Study Centre</div>
-          <div class="port-title">Pragati Printed Banner</div>
+          <div class="port-client">1 Item</div>
+          <div class="port-title">Local</div>
         </div>
-      </a>
+      </div>
 
-      <!-- 10. Illustration Replica Fox -->
-      <a href="past%20work/2025%20side%20project/illustration%20replica/sleepy%20fox%20v1.webp" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
+      <!-- 7. Mahakumbh -->
+      <div class="port-card stg folder-card" onclick="openFolder('mahakumbh')">
         <div class="port-thumb">
-          <img src="past%20work/2025%20side%20project/illustration%20replica/sleepy%20fox%20v1.webp" alt="Sleepy Fox" loading="lazy" style="object-fit: cover; object-position: center;">
-          <span class="port-chip">Illustration</span>
+          <img src="past%20work/mahakumbh/IDENTITY%20CARD.webp" alt="Mahakumbh" loading="lazy">
+          <span class="port-chip" style="display:flex;align-items:center;gap:4px;"><i data-lucide="folder" style="width:12px;height:12px;"></i> Folder</span>
         </div>
         <div class="port-info">
-          <div class="port-client">Personal Project</div>
-          <div class="port-title">Sleepy Fox Illustration</div>
+          <div class="port-client">1 Item</div>
+          <div class="port-title">Mahakumbh</div>
         </div>
-      </a>
+      </div>
 
-      <!-- 11. Illustration Replica Monkey -->
-      <a href="past%20work/2025%20side%20project/illustration%20replica/monkey%20prac%201-01.webp" target="_blank" class="port-card port-hidden-item" style="text-decoration:none; color:inherit; display:none;">
+      <!-- 8. Mahi Furniture -->
+      <div class="port-card stg folder-card" onclick="openFolder('Mahi Furniture')">
         <div class="port-thumb">
-          <img src="past%20work/2025%20side%20project/illustration%20replica/monkey%20prac%201-01.webp" alt="Monkey Practice" loading="lazy" style="object-fit: cover; object-position: center;">
-          <span class="port-chip">Illustration</span>
+          <img src="past%20work/Mahi%20Furniture/MAHI%20FURNITURE.webp" alt="Mahi Furniture" loading="lazy">
+          <span class="port-chip" style="display:flex;align-items:center;gap:4px;"><i data-lucide="folder" style="width:12px;height:12px;"></i> Folder</span>
         </div>
         <div class="port-info">
-          <div class="port-client">Personal Project</div>
-          <div class="port-title">Monkey Illustration</div>
+          <div class="port-client">1 Item</div>
+          <div class="port-title">Mahi Furniture</div>
         </div>
-      </a>
+      </div>
 </div>
   </div>
 </section>
@@ -1197,6 +1172,14 @@ footer a .lucide{width:14px;height:14px}
 </footer>
 
 
+<!-- MASONRY MODAL -->
+<div class="masonry-modal" id="folder-modal">
+  <div class="masonry-modal-close" onclick="closeModal()">
+    <i data-lucide="x"></i>
+  </div>
+  <div class="masonry-modal-title" id="folder-modal-title">Folder Name</div>
+  <div class="masonry-grid" id="folder-modal-grid"></div>
+</div>
 
 <!-- SCRIPTS -->
 <script src="https://unpkg.com/lucide@0.460.0/dist/umd/lucide.min.js"></script>
@@ -1310,34 +1293,100 @@ if (wordLocal) {
   });
 }
 
-function togglePortfolio() {
-  const hiddenItems = document.querySelectorAll('.port-hidden-item');
-  const btn = document.getElementById('see-all-btn');
-  const isExpanded = btn.classList.contains('expanded');
-  const grid = document.getElementById('port-grid');
+const folderImages = {
+  "2024 st george": [
+    "past work/2024 st george/input/hfxontwjvjaktbz2om39.webp",
+    "past work/2024 st george/input/hjvyy3hwxamw6seghxtf.webp",
+    "past work/2024 st george/input/ih3cn15spqti6diyfdgd.webp",
+    "past work/2024 st george/input/oyhcicchy9miekzcq9xn.webp",
+    "past work/2024 st george/input/rh3zjvngmrnfsfybrbgp.webp",
+    "past work/2024 st george/input/rjl9hs3osrkyalehh6uv.webp",
+    "past work/2024 st george/output/class6/1.webp",
+    "past work/2024 st george/output/class6/2.webp",
+    "past work/2024 st george/output/class6/3.webp",
+    "past work/2024 st george/output/class7/1.webp",
+    "past work/2024 st george/output/class7/2.webp",
+    "past work/2024 st george/output/class7/3.webp"
+  ],
+  "2025 Pragati": [
+    "past work/2025 Pragati/admission form/1.webp",
+    "past work/2025 Pragati/admission form/2.webp",
+    "past work/2025 Pragati/Demo Lecture.gif",
+    "past work/2025 Pragati/pragati poster.webp",
+    "past work/2025 Pragati/printed BANNER.webp"
+  ],
+  "2025 side project": [
+    "past work/2025 side project/illustration replica/monkey prac 1-01.webp",
+    "past work/2025 side project/illustration replica/sleepy fox v1.webp",
+    "past work/2025 side project/irpe logo design.pdf-page2of3.webp"
+  ],
+  "2025 vasundhara": [
+    "past work/2025 vasundhara/buisinessCard.webp",
+    "past work/2025 vasundhara/failed sketches.svg",
+    "past work/2025 vasundhara/initial measurements.svg",
+    "past work/2025 vasundhara/intro - brand title 2.svg",
+    "past work/2025 vasundhara/intro - brand title.svg",
+    "past work/2025 vasundhara/justLogo.svg",
+    "past work/2025 vasundhara/Logo-Type Choice.svg",
+    "past work/2025 vasundhara/Patterns.svg",
+    "past work/2025 vasundhara/signifies.svg",
+    "past work/2025 vasundhara/test banner.svg",
+    "past work/2025 vasundhara/testing-1.svg",
+    "past work/2025 vasundhara/testing.svg",
+    "past work/2025 vasundhara/test_fonts.svg",
+    "past work/2025 vasundhara/TitleBanner.svg",
+    "past work/2025 vasundhara/titlebannerchecks.svg",
+    "past work/2025 vasundhara/titlebannerRes.svg",
+    "past work/2025 vasundhara/use cases.svg"
+  ],
+  "2026 cineq": [
+    "past work/2026 cineq/favicon.webp",
+    "past work/2026 cineq/og logo.webp"
+  ],
+  "Local": [
+    "past work/Local/shok bhoj nimantran card.webp"
+  ],
+  "mahakumbh": [
+    "past work/mahakumbh/IDENTITY CARD.webp"
+  ],
+  "Mahi Furniture": [
+    "past work/Mahi Furniture/MAHI FURNITURE.webp"
+  ]
+};
+
+function openFolder(folderKey) {
+  const modal = document.getElementById('folder-modal');
+  const title = document.getElementById('folder-modal-title');
+  const grid = document.getElementById('folder-modal-grid');
   
-  const textSpan = document.getElementById('see-all-text');
-  const icon = document.getElementById('see-all-icon') || btn.querySelector('svg');
+  title.innerText = folderKey;
+  grid.innerHTML = '';
   
-  if (isExpanded) {
-    hiddenItems.forEach(item => item.style.display = 'none');
-    btn.classList.remove('expanded');
-    textSpan.innerText = 'see more';
-    if (icon) icon.style.transform = 'rotate(0deg)';
-    grid.insertBefore(btn, hiddenItems[0]); 
-    document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth', block: 'start' });
-  } else {
-    hiddenItems.forEach(item => {
-      item.style.display = 'block';
-      gsap.fromTo(item, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" });
+  if (folderImages[folderKey]) {
+    folderImages[folderKey].forEach(src => {
+      const item = document.createElement('div');
+      item.className = 'masonry-item';
+      const img = document.createElement('img');
+      img.src = src;
+      img.loading = 'lazy';
+      item.appendChild(img);
+      grid.appendChild(item);
     });
-    btn.classList.add('expanded');
-    textSpan.innerText = 'see less';
-    if (icon) icon.style.transform = 'rotate(180deg)';
-    grid.appendChild(btn);
   }
-  if (window.ScrollTrigger) ScrollTrigger.refresh();
+  
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
 }
+
+function closeModal() {
+  const modal = document.getElementById('folder-modal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('folder-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
 
 </script>
 </body>
