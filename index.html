@@ -117,8 +117,7 @@ nav.scrolled{
   transform: translate(2px, -2px);
 }
 @media(max-width:480px){
-  .btn-pill-white span { display: none; }
-  .btn-pill-white { padding: .4rem; }
+  .btn-pill-white { padding: .4rem .4rem .4rem 1.1rem; }
 }
 
 .btn-pill {
@@ -203,6 +202,8 @@ nav.scrolled{
   .hero-container { border-radius: 24px; }
   .hero {
     grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 1.5rem;
     padding: 7.5rem 1.5rem 2.5rem 1.5rem;
     min-height: auto;
   }
@@ -593,6 +594,9 @@ footer a .lucide{width:14px;height:14px}
   padding: 2.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
   transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease;
+}
+@media(max-width: 768px){
+  .hero-glass { padding: 1.5rem; border-radius: 20px; }
 }
 .hero-glass:hover {
   background: rgba(255, 255, 255, 0.07);
