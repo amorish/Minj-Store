@@ -77,9 +77,10 @@ nav.scrolled{
     backdrop-filter: blur(24px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
   }
-  .nav-container { flex-direction: column; gap: 0.8rem; }
-  .nav-links { flex-wrap: wrap; justify-content: center; gap: 1rem; }
-  .nav-links a { font-size: 0.8rem; }
+  .nav-container { flex-wrap: nowrap; justify-content: space-between; align-items: center; }
+  .nav-logo { flex: 0 0 auto; text-align: left; order: 1; }
+  .nav-right { flex: 0 0 auto; display: flex; justify-content: flex-end; order: 2; }
+  .nav-links { display: none; }
 }
 
 /* Pill CTA Buttons */
@@ -115,6 +116,11 @@ nav.scrolled{
 }
 .btn-pill-white:hover .btn-arrow {
   transform: translate(2px, -2px);
+}
+.btn-pill-white .btn-arrow i {
+  width: 18px;
+  height: 18px;
+  color: #fff;
 }
 @media(max-width:480px){
   .btn-pill-white { padding: .4rem .4rem .4rem 1.1rem; }
