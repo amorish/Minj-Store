@@ -414,38 +414,59 @@ nav.scrolled{
 .about-left .section-title em{color:var(--accent);font-style:normal}
 .about-right p{font-size:clamp(.92rem,1.4vw,1.05rem);font-weight:500;line-height:1.8;color:#aaa;margin-bottom:1.5rem}
 
-.img-strip {
+.team-strip {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
-  max-width: 1080px;
   margin: 4.5rem auto 0;
-  padding: 0 1.5rem;
 }
 @media(max-width: 640px){
-  .img-strip {
+  .team-strip {
     grid-template-columns: 1fr;
     gap: 1.5rem;
   }
 }
-.img-strip-card {
-  aspect-ratio: 3/4;
+.team-card {
   border-radius: 28px;
   overflow: hidden;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: all .5s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.img-strip-card:nth-child(1) { margin-top: 0 }
-.img-strip-card:nth-child(3) { margin-top: 0 }
-.img-strip-card img {
+.card-gulshan { background: #e0a85b; }
+.card-manish { background: #d23b4b; }
+
+.team-card:hover {
+  background: #1a1a1a;
+}
+
+.team-img {
   width: 100%;
-  height: 100%;
+  aspect-ratio: 1/1;
   object-fit: cover;
+  object-position: center;
   filter: grayscale(100%);
   transition: all .5s cubic-bezier(0.25, 1, 0.5, 1);
 }
-.img-strip-card:hover img {
+.team-card:hover .team-img {
   filter: grayscale(0%);
-  transform: scale(1.05);
+}
+
+.team-info {
+  padding: 1.5rem 2rem 2rem;
+}
+.team-name {
+  font-family: var(--font-head);
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.2rem;
+  line-height: 1.2;
+}
+.team-role {
+  font-size: 0.95rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
 }
 
 /* ─── STATS ─────────────────────────────────────────────── */
@@ -729,7 +750,7 @@ footer a .lucide{width:14px;height:14px}
   <div class="container">
     <div class="about-inner">
       <div class="about-left fade-up">
-        <span class="label" data-i18n="about.label">About the Designer</span>
+        <span class="label" data-i18n="about.label">About Us</span>
         <h2 class="section-title" data-i18n-html="about.title">Shaping Brands<br>That Make <em>Local</em><br>Businesses Win.</h2>
       </div>
       <div class="about-right fade-up">
@@ -738,10 +759,21 @@ footer a .lucide{width:14px;height:14px}
         
       </div>
     </div>
-    <div class="img-strip" id="img-strip">
-      <div class="img-strip-card"><img src="https://images.unsplash.com/photo-1591047139829-d91aecb6caea?w=500&auto=format&fit=crop&q=80" alt="Brand design" loading="lazy"></div>
-      <div class="img-strip-card"><img src="https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=500&auto=format&fit=crop&q=80" alt="Print design" loading="lazy"></div>
-      <div class="img-strip-card"><img src="https://images.unsplash.com/photo-1608248597279-f99d160bfcbc?w=500&auto=format&fit=crop&q=80" alt="Digital workspace" loading="lazy"></div>
+    <div class="team-strip fade-up" id="team-strip">
+      <div class="team-card card-gulshan">
+        <img src="profiles/gulshanminj.webp" alt="Gulshan Minj" class="team-img" loading="lazy">
+        <div class="team-info">
+          <div class="team-name">Gulshan Minj</div>
+          <div class="team-role">Customer Handler, Cashier etc.</div>
+        </div>
+      </div>
+      <div class="team-card card-manish">
+        <img src="profiles/manishoraon.webp" alt="Manish Oraon" class="team-img" loading="lazy">
+        <div class="team-info">
+          <div class="team-name">Manish Oraon</div>
+          <div class="team-role">Designer & Developer</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
