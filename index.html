@@ -621,7 +621,7 @@ section{padding:5rem 0}
 .folder-card { cursor: pointer; }
 .masonry-modal {
   position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-  background: rgba(12, 12, 12, 0.98);
+  background: var(--bg);
   z-index: 9999; display: none; opacity: 0;
   flex-direction: column; align-items: center; justify-content: flex-start;
   overflow-y: auto; overflow-x: hidden;
@@ -645,7 +645,7 @@ section{padding:5rem 0}
 }
 .masonry-item {
   break-inside: avoid; margin-bottom: 1rem; border-radius: 12px;
-  overflow: hidden; background: #fff;
+  overflow: hidden; background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 .masonry-item img {
