@@ -268,12 +268,7 @@ nav.scrolled{
     margin-top: 2rem;
   }
 }
-@media(max-width: 480px){
-  .hero-cats {
-    grid-template-columns: 1fr;
-  }
 }
-.hero-cat {
   transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   cursor: default;
 }
@@ -415,9 +410,41 @@ nav.scrolled{
   height: 18px;
   color: var(--accent);
 }
+.trusted-logos-track {
+  display: contents;
+}
+.mobile-dup {
+  display: none;
+}
 @media(max-width:768px){
-  .trusted-inner { flex-direction: column; align-items: flex-start; gap: 1rem; }
-  .trusted-logos { gap: 1.5rem; }
+  .trusted-inner { flex-direction: column; align-items: flex-start; gap: 1.5rem; overflow: hidden; width: 100%; }
+  .trusted-logos-wrap {
+    width: 100vw;
+    margin-left: -1.5rem;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to right, transparent, black 1.5rem, black calc(100% - 1.5rem), transparent);
+  }
+  .trusted-logos {
+    display: flex;
+    flex-wrap: nowrap;
+    width: max-content;
+    animation: marquee 15s linear infinite;
+    gap: 0;
+  }
+  .trusted-logos-track {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: 2.5rem;
+    padding-right: 2.5rem;
+  }
+  .mobile-dup {
+    display: flex;
+  }
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
 /* ─── TICKER (Not needed but keeping just in case) ──────── */
@@ -804,11 +831,21 @@ footer a .lucide{width:14px;height:14px}
 <div class="trusted-bar">
   <div class="container trusted-inner">
     <span class="trusted-label" data-i18n="trusted.label">Trusted by Local Businesses</span>
-    <div class="trusted-logos">
-      <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/vasundhara%20logo.svg" alt="Vasundhara" style="height:24px;"><span>Vasundhara Nursery</span></div>
-      <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/pragati%20logo.webp" alt="Pragati" style="height:40px;"><span>Pragati Study Centre</span></div>
-      <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/st%20george%20logo.webp" alt="St George High School" style="height:40px;"><span>St George High School</span></div>
-      <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/shivaji%20sangha%20logo.webp" alt="Shivaji Sangha" style="height:40px;"><span>Shivaji Sangha</span></div>
+    <div class="trusted-logos-wrap">
+      <div class="trusted-logos">
+        <div class="trusted-logos-track">
+          <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/vasundhara%20logo.svg" alt="Vasundhara" style="height:24px;"><span>Vasundhara Nursery</span></div>
+          <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/pragati%20logo.webp" alt="Pragati" style="height:40px;"><span>Pragati Study Centre</span></div>
+          <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/st%20george%20logo.webp" alt="St George High School" style="height:40px;"><span>St George High School</span></div>
+          <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/shivaji%20sangha%20logo.webp" alt="Shivaji Sangha" style="height:40px;"><span>Shivaji Sangha</span></div>
+        </div>
+        <div class="trusted-logos-track mobile-dup">
+          <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/vasundhara%20logo.svg" alt="Vasundhara" style="height:24px;"><span>Vasundhara Nursery</span></div>
+          <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/pragati%20logo.webp" alt="Pragati" style="height:40px;"><span>Pragati Study Centre</span></div>
+          <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/st%20george%20logo.webp" alt="St George High School" style="height:40px;"><span>St George High School</span></div>
+          <div class="trusted-logo"><img src="worked%20with%20brand%20institute%20logos/shivaji%20sangha%20logo.webp" alt="Shivaji Sangha" style="height:40px;"><span>Shivaji Sangha</span></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
