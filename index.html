@@ -430,7 +430,10 @@ nav.scrolled{
   border-radius: 28px;
   overflow: hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
+  padding: 1.5rem;
+  gap: 1.5rem;
   transition: all .5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 .card-gulshan { background: #e0a85b; }
@@ -441,8 +444,10 @@ nav.scrolled{
 }
 
 .team-img {
-  width: 100%;
-  aspect-ratio: 1/1;
+  width: 90px;
+  height: 90px;
+  flex-shrink: 0;
+  border-radius: 50%;
   object-fit: cover;
   object-position: center;
   filter: grayscale(100%);
@@ -453,11 +458,12 @@ nav.scrolled{
 }
 
 .team-info {
-  padding: 1.5rem 2rem 2rem;
+  padding: 0;
+  text-align: left;
 }
 .team-name {
   font-family: var(--font-head);
-  font-size: 1.6rem;
+  font-size: 1.4rem;
   font-weight: 700;
   color: #fff;
   margin-bottom: 0.2rem;
@@ -465,7 +471,7 @@ nav.scrolled{
 }
 .team-role {
   font-size: 0.95rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: rgba(255, 255, 255, 0.9);
   font-weight: 500;
 }
 
