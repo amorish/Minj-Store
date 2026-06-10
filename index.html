@@ -1538,24 +1538,35 @@ ScrollTrigger.create({ start:'top -60px', onToggle: self => document.querySelect
 
 const wordLocal = document.getElementById('word-local');
 if (wordLocal) {
+  const originalWord = "Local";
+  const words = "Local,Rural,Small,Regional,Community,Homegrown".split(',');
+  let wordIdx = 0;
+  
+  wordLocal.style.transition = 'color 0.3s ease';
+
+  // Slow loop by default
+  let wordInterval = setInterval(() => {
+    wordIdx = (wordIdx + 1) % words.length;
+    wordLocal.innerText = words[wordIdx];
+  }, 2000);
+
+  // On hover, stop loop, force to "Local" and highlight
   wordLocal.addEventListener('mouseenter', () => {
-    if (wordLocal.wordInterval) return;
-    if (!wordLocal.dataset.original) wordLocal.dataset.original = wordLocal.innerText;
-    let words = (wordLocal.dataset.words || "Rural,Small,Regional,Community,Homegrown").split(',');
-    wordLocal.dataset.wordIdx = 0;
-    wordLocal.wordInterval = setInterval(() => {
-      wordLocal.innerText = words[wordLocal.dataset.wordIdx];
-      wordLocal.dataset.wordIdx = (parseInt(wordLocal.dataset.wordIdx) + 1) % words.length;
-    }, 350);
+    clearInterval(wordInterval);
+    wordLocal.innerText = originalWord;
     wordLocal.style.color = '#F5A623';
   });
+
+  // On leave, remove highlight and resume loop
   wordLocal.addEventListener('mouseleave', () => {
-    if (wordLocal.wordInterval) {
-      clearInterval(wordLocal.wordInterval);
-      wordLocal.wordInterval = null;
-      wordLocal.innerText = wordLocal.dataset.original;
-      wordLocal.style.color = '';
-    }
+    wordLocal.style.color = '';
+    wordIdx = words.indexOf(wordLocal.innerText);
+    if (wordIdx === -1) wordIdx = 0;
+    
+    wordInterval = setInterval(() => {
+      wordIdx = (wordIdx + 1) % words.length;
+      wordLocal.innerText = words[wordIdx];
+    }, 2000);
   });
 }
 
