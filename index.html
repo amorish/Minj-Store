@@ -556,6 +556,7 @@ const folderData = {
     if ('scrollRestoration' in history) {
       history.scrollRestoration = 'manual';
     }
+    window.onbeforeunload = function () { window.scrollTo(0, 0); };
     window.scrollTo(0, 0);
 
     const lenis = new Lenis({
@@ -577,6 +578,8 @@ const folderData = {
 
     // 3. Preloader & Initial Animations
     window.addEventListener('load', () => {
+      window.scrollTo(0, 0);
+      setTimeout(() => window.scrollTo(0, 0), 10);
       const tl = gsap.timeline();
       tl.to('.preloader-text span', { y: 0, duration: 1, ease: "power4.out" })
         .to('.preloader-text span', { y: '-100%', duration: 0.8, ease: "power4.in", delay: 0.5 })
