@@ -25,11 +25,10 @@
     ::selection { background: var(--accent); color: #000; }
 
     /* Custom Scrollbar */
-    html { scrollbar-width: thin; scrollbar-color: #333 var(--bg); }
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: var(--bg); }
-    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+    ::-webkit-scrollbar { display: none; }
+    html { scrollbar-width: none; -ms-overflow-style: none; }
+    .custom-scrollbar { position: fixed; top: 0; right: 0; width: 12px; height: 100vh; z-index: 99999; display: flex; justify-content: flex-end; align-items: flex-start; pointer-events: none; }
+    .custom-scrollbar-thumb { width: 4px; height: 0px; background: var(--accent); border-radius: 4px; margin-right: 2px; }
 
     /* Custom Cursor */
     .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 999999; pointer-events: none; }
@@ -180,6 +179,11 @@
   <!-- Custom Cursor -->
   <div class="cursor-dot"></div>
   <div class="cursor-outline"></div>
+
+  <!-- Custom Scrollbar -->
+  <div class="custom-scrollbar">
+    <div class="custom-scrollbar-thumb"></div>
+  </div>
 
   <!-- Preloader -->
   <div class="preloader">
@@ -600,6 +604,23 @@ const folderData = {
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((time) => { lenis.raf(time * 1000) });
     gsap.ticker.lagSmoothing(0, 0);
+
+    // Custom Scrollbar Logic
+    const scrollThumb = document.querySelector('.custom-scrollbar-thumb');
+    function updateScrollbar() {
+      const scrollHeight = document.documentElement.scrollHeight;
+      const clientHeight = document.documentElement.clientHeight;
+      const scrollTop = window.scrollY || document.documentElement.scrollTop;
+      const ratio = clientHeight / scrollHeight;
+      const thumbHeight = Math.max(ratio * clientHeight, 40);
+      const maxScroll = scrollHeight - clientHeight;
+      const scrollProgress = maxScroll > 0 ? scrollTop / maxScroll : 0;
+      const maxThumbY = clientHeight - thumbHeight;
+      gsap.set(scrollThumb, { height: thumbHeight, y: scrollProgress * maxThumbY });
+    }
+    lenis.on('scroll', updateScrollbar);
+    window.addEventListener('resize', updateScrollbar);
+    setTimeout(updateScrollbar, 500);
 
     lenis.stop(); // Lock scroll during intro
 
