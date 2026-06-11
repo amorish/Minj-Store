@@ -650,24 +650,46 @@ const folderData = {
         .from('.hero-title .char', { y: 100, opacity: 0, stagger: 0.05, duration: 1.2, ease: "power4.out" }, "-=0.5")
         .from('.hero-subtitle', { y: 30, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.8");
         
-      // Mobile Brand Logo click interaction
+      // Mobile Brand Logo click interaction (Awwwards Style 3D Flip)
       const brandContainers = document.querySelectorAll('.trusted-logos > div');
       brandContainers.forEach(container => {
+        container.style.cursor = 'pointer';
         container.addEventListener('click', () => {
-          if (window.innerWidth <= 768) {
+          if (window.innerWidth <= 768 && !container.isAnimating) {
             const img = container.querySelector('img');
             const name = container.querySelector('.brand-name');
-            if (img && name) {
-              img.style.display = 'none';
-              name.style.display = 'inline-block';
+            if (img && name && img.style.display !== 'none') {
+              container.isAnimating = true;
               
-              // Clear any existing timeout to avoid glitching if clicked multiple times
-              if (container.resetTimeout) clearTimeout(container.resetTimeout);
+              const tl = gsap.timeline();
               
-              container.resetTimeout = setTimeout(() => {
-                img.style.display = '';
-                name.style.display = '';
-              }, 2000);
+              // Snappy 3D fold out image
+              tl.to(img, { opacity: 0, rotationX: 90, duration: 0.3, ease: "power2.in" })
+                .call(() => {
+                   img.style.display = 'none';
+                   name.style.display = 'inline-block';
+                })
+                // Snappy 3D fold in text
+                .fromTo(name, 
+                  { opacity: 0, rotationX: -90, transformOrigin: "center center" }, 
+                  { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" }
+                )
+                .call(() => {
+                   container.isAnimating = false;
+                   
+                   if (container.resetTimeout) clearTimeout(container.resetTimeout);
+                   container.resetTimeout = setTimeout(() => {
+                     container.isAnimating = true;
+                     const tl2 = gsap.timeline();
+                     tl2.to(name, { opacity: 0, rotationX: 90, duration: 0.3, ease: "power2.in" })
+                        .call(() => {
+                           name.style.display = 'none';
+                           img.style.display = '';
+                        })
+                        .to(img, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
+                        .call(() => container.isAnimating = false);
+                   }, 2500);
+                });
             }
           }
         });
