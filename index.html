@@ -48,7 +48,7 @@
     .hero-bg { position: absolute; inset: 0; background: radial-gradient(circle at 50% 50%, rgba(212, 255, 0, 0.05) 0%, transparent 50%); z-index: 0; }
     .hero-content { position: relative; z-index: 1; text-align: center; width: 100%; }
     .hero-title { font-family: var(--font-display); font-size: clamp(2.5rem, 14vw, 12rem); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; margin-bottom: 2rem; white-space: nowrap; }
-    .hero-title span.outline { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); display: block; }
+    .hero-title span.outline { color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, 0.2); }
     .hero-subtitle { font-size: clamp(1rem, 1.5vw, 1.5rem); color: rgba(255, 255, 255, 0.6); max-width: 600px; margin: 0 auto; line-height: 1.5; }
 
     /* Marquee */
@@ -150,10 +150,22 @@
       <div class="hero-bg"></div>
       <div class="hero-content container">
         <h1 class="hero-title">
-          <span class="outline split-text">Shaping</span>
+          <span class="outline split-text">Shaping</span><br>
           <span class="split-text">Brands</span>
         </h1>
         <p class="hero-subtitle fade-up">That make local businesses win. From visiting cards to websites, we handle everything the local market needs.</p>
+      </div>
+    </section>
+
+    <section class="trusted-bar" style="border-bottom: 1px solid rgba(255,255,255,0.1); padding: 4rem 0; background: var(--surface);">
+      <div class="container" style="display: flex; flex-direction: column; align-items: center; gap: 2rem;">
+        <p style="font-size: 0.8rem; text-transform: uppercase; letter-spacing: 2px; color: rgba(255,255,255,0.4);">Trusted by Local Businesses</p>
+        <div style="display: flex; gap: 4rem; flex-wrap: wrap; justify-content: center; opacity: 0.6; filter: grayscale(100%);">
+          <div style="display: flex; align-items: center; gap: 0.8rem; font-weight: 600;"><img src="worked%20with%20brand%20institute%20logos/vasundhara%20logo.svg" style="height: 24px;"> Vasundhara Nursery</div>
+          <div style="display: flex; align-items: center; gap: 0.8rem; font-weight: 600;"><img src="worked%20with%20brand%20institute%20logos/pragati%20logo.webp" style="height: 32px;"> Pragati Study Centre</div>
+          <div style="display: flex; align-items: center; gap: 0.8rem; font-weight: 600;"><img src="worked%20with%20brand%20institute%20logos/st%20george%20logo.webp" style="height: 32px;"> St George High School</div>
+          <div style="display: flex; align-items: center; gap: 0.8rem; font-weight: 600;"><img src="worked%20with%20brand%20institute%20logos/shivaji%20sangha%20logo.webp" style="height: 32px;"> Shivaji Sangha</div>
+        </div>
       </div>
     </section>
 
@@ -164,9 +176,31 @@
       </div>
     </div>
 
+    <section class="team container" style="padding-top: 10rem;">
+      <div class="section-header" style="margin-bottom: 3rem;">
+        <h2 class="section-title split-text">The Team</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+        <div class="team-card fade-up" style="background: var(--surface); padding: 2rem; border-radius: 20px; display: flex; align-items: center; gap: 2rem; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.querySelector('img').style.filter='grayscale(0%)'" onmouseout="this.style.transform='translateY(0)'; this.querySelector('img').style.filter='grayscale(100%)'">
+          <img src="profiles/manishoraon.webp" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); transition: filter 0.3s;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.2rem;">Manish Oraon</h3>
+            <p style="color: var(--accent); font-size: 0.9rem;">Designer & Developer</p>
+          </div>
+        </div>
+        <div class="team-card fade-up" style="background: var(--surface); padding: 2rem; border-radius: 20px; display: flex; align-items: center; gap: 2rem; transition: transform 0.3s; cursor: pointer;" onmouseover="this.style.transform='translateY(-10px)'; this.querySelector('img').style.filter='grayscale(0%)'" onmouseout="this.style.transform='translateY(0)'; this.querySelector('img').style.filter='grayscale(100%)'">
+          <img src="profiles/gulshanminj.webp" style="width: 90px; height: 90px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); transition: filter 0.3s;">
+          <div>
+            <h3 style="font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.2rem;">Gulshan Minj</h3>
+            <p style="color: var(--accent); font-size: 0.9rem;">Client Relations & Print Manager</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="services container">
       <div class="section-header">
-        <h2 class="section-title split-text">What I Do</h2>
+        <h2 class="section-title split-text">What We Do</h2>
         <p class="section-desc fade-up">Every kind of design. One place. Professional design for local businesses.</p>
       </div>
       <div class="service-list">
@@ -220,9 +254,7 @@
       <div class="footer-bottom">
         <p>&copy; 2026 Minj Store. Design & Web Services.</p>
         <div class="footer-links">
-          <a href="#">Instagram</a>
-          <a href="#">Twitter</a>
-          <a href="#">Email</a>
+          <a href="mailto:manish.oraon.career@gmail.com">Email</a>
         </div>
       </div>
     </footer>
@@ -549,7 +581,7 @@ const folderData = {
       const grid = document.getElementById('port-grid');
       grid.innerHTML = '';
       
-      const predefinedOrder = ['Vasundhara', 'St George', 'Mahakumbh', 'Shivaji Sangha', 'Pragati'];
+      const predefinedOrder = ['Mahakumbh', 'Vasundhara', 'St George', 'Shivaji Sangha', 'Pragati'];
       const sortedFolders = Object.keys(dataObj)
         .map(key => ({ title: key, ...dataObj[key] }))
         .sort((a, b) => {
@@ -624,15 +656,25 @@ const folderData = {
           });
         });
       }
-      
       modal.classList.add('active');
       lenis.stop(); // Stop smooth scrolling while modal is open
+
+      // Modal opening GSAP animations
+      gsap.fromTo(title, {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "power3.out", delay: 0.1});
+      gsap.fromTo('.masonry-item', {y: 50, scale: 0.95, opacity: 0}, {y: 0, scale: 1, opacity: 1, duration: 0.6, stagger: 0.05, ease: "power3.out", delay: 0.2});
     }
 
     function closeModal() {
       const modal = document.getElementById('folder-modal');
-      modal.classList.remove('active');
-      lenis.start(); // Resume scrolling
+      
+      // Modal closing GSAP animations
+      gsap.to('.masonry-item', {y: 20, opacity: 0, duration: 0.3, stagger: 0.02, ease: "power2.in"});
+      gsap.to('#folder-modal-title', {y: -20, opacity: 0, duration: 0.3, ease: "power2.in"});
+      
+      setTimeout(() => {
+        modal.classList.remove('active');
+        lenis.start(); // Resume scrolling
+      }, 400);
     }
 
     document.getElementById('folder-modal').addEventListener('click', function(e) {
