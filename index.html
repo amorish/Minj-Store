@@ -21,7 +21,7 @@
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
-    body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+    body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
     ::selection { background: var(--accent); color: #000; }
 
     /* Custom Cursor */
@@ -576,11 +576,19 @@ const folderData = {
     gsap.ticker.add((time) => { lenis.raf(time * 1000) });
     gsap.ticker.lagSmoothing(0, 0);
 
+    lenis.stop(); // Lock scroll during intro
+
     // 3. Preloader & Initial Animations
     window.addEventListener('load', () => {
       window.scrollTo(0, 0);
       setTimeout(() => window.scrollTo(0, 0), 10);
-      const tl = gsap.timeline();
+      const tl = gsap.timeline({
+        onComplete: () => {
+          document.body.style.overflow = 'auto';
+          document.body.style.overflowX = 'hidden';
+          lenis.start();
+        }
+      });
       tl.to('.preloader-text span', { y: 0, duration: 1, ease: "power4.out" })
         .to('.preloader-text span', { y: '-100%', duration: 0.8, ease: "power4.in", delay: 0.5 })
         .to('.preloader', { height: 0, duration: 1, ease: "power4.inOut" }, "-=0.2")
