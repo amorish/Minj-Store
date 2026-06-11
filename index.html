@@ -654,6 +654,8 @@ const folderData = {
     // Mobile Brand Logo click interaction (Awwwards Style 3D Flip)
     document.addEventListener('DOMContentLoaded', () => {
       const brandContainers = document.querySelectorAll('.trusted-logos > div');
+      let activeBrand = null; // Track the currently open brand
+
       brandContainers.forEach(container => {
         container.style.cursor = 'pointer';
         // Add perspective for a true 3D flip effect
@@ -661,10 +663,35 @@ const folderData = {
         
         container.addEventListener('click', () => {
           if (window.innerWidth <= 768 && !container.isAnimating) {
+            
+            // If another brand is open, close it immediately
+            if (activeBrand && activeBrand !== container) {
+              const oldContainer = activeBrand;
+              const oldImg = oldContainer.querySelector('img');
+              const oldName = oldContainer.querySelector('.brand-name');
+              
+              if (oldContainer.resetTimeout) clearTimeout(oldContainer.resetTimeout);
+              oldContainer.isAnimating = true;
+              
+              const tlClose = gsap.timeline();
+              tlClose.to(oldName, { opacity: 0, rotationX: 90, duration: 0.3, ease: "power2.in" })
+                .call(() => {
+                   oldName.style.display = 'none';
+                   oldImg.style.display = '';
+                   gsap.set(oldImg, { opacity: 0, rotationX: -90 });
+                })
+                .to(oldImg, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
+                .call(() => {
+                   oldContainer.isAnimating = false;
+                   if (activeBrand === oldContainer) activeBrand = null;
+                });
+            }
+
             const img = container.querySelector('img');
             const name = container.querySelector('.brand-name');
             if (img && name && img.style.display !== 'none') {
               container.isAnimating = true;
+              activeBrand = container; // Mark as currently open
               
               const tl = gsap.timeline();
               
@@ -683,16 +710,22 @@ const folderData = {
                    
                    if (container.resetTimeout) clearTimeout(container.resetTimeout);
                    container.resetTimeout = setTimeout(() => {
-                     container.isAnimating = true;
-                     const tl2 = gsap.timeline();
-                     tl2.to(name, { opacity: 0, rotationX: 90, duration: 0.3, ease: "power2.in" })
-                        .call(() => {
-                           name.style.display = 'none';
-                           img.style.display = '';
-                           gsap.set(img, { opacity: 0, rotationX: -90 });
-                        })
-                        .to(img, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
-                        .call(() => container.isAnimating = false);
+                     // Only auto-close if it hasn't been closed already
+                     if (activeBrand === container && !container.isAnimating) {
+                       container.isAnimating = true;
+                       const tl2 = gsap.timeline();
+                       tl2.to(name, { opacity: 0, rotationX: 90, duration: 0.3, ease: "power2.in" })
+                          .call(() => {
+                             name.style.display = 'none';
+                             img.style.display = '';
+                             gsap.set(img, { opacity: 0, rotationX: -90 });
+                          })
+                          .to(img, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
+                          .call(() => {
+                             container.isAnimating = false;
+                             if (activeBrand === container) activeBrand = null;
+                          });
+                     }
                    }, 2500);
                 });
             }
