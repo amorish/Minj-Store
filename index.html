@@ -306,7 +306,7 @@ nav.scrolled{
     justify-content: flex-end;
     margin-bottom: 2.5rem;
     margin-right: -1.5rem;
-    margin-left: 5.5rem;
+    margin-left: -1.5rem;
   }
 }
 .hero-center-img-wrap {
@@ -367,7 +367,9 @@ nav.scrolled{
 @media(max-width:960px){
   .hero-tagline {
     text-align: left;
-    max-width: 100%;
+    width: max-content;
+    max-width: 95vw;
+    margin-left: auto;
     border-radius: 20px 0 0 20px !important;
     border-right: none !important;
   }
@@ -1489,7 +1491,7 @@ tl.from('.hero-left',    { opacity:0, x:-20, duration:1 })
   .from('#hero-title',   { opacity:0, y:20,  duration:.7 }, '-=.3')
   .from('.hero-cats .hero-cat', { opacity:0, y:20, stagger:.12, duration:.5 }, '-=.4')
   .from('#hero-img img', { opacity:0, scale:1.05, duration:1.2, ease:'power2.out' }, .2)
-  .from('.hero-tagline', { opacity:0, x:20, duration:1, clearProps: "all" }, '<.4');
+  .from('.hero-tagline', { opacity:0, x:-20, duration:1, clearProps: "all" }, '<.4');
 
 renderPortfolio();
 
