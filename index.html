@@ -648,6 +648,29 @@ const folderData = {
         .to('.preloader', { height: 0, duration: 1, ease: "power4.inOut" }, "-=0.2")
         .from('.hero-title .char', { y: 100, opacity: 0, stagger: 0.05, duration: 1.2, ease: "power4.out" }, "-=0.5")
         .from('.hero-subtitle', { y: 30, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.8");
+        
+      // Mobile Brand Logo click interaction
+      const brandContainers = document.querySelectorAll('.trusted-bar > div:nth-child(2) > div');
+      brandContainers.forEach(container => {
+        container.addEventListener('click', () => {
+          if (window.innerWidth <= 768) {
+            const img = container.querySelector('img');
+            const name = container.querySelector('.brand-name');
+            if (img && name) {
+              img.style.display = 'none';
+              name.style.display = 'inline-block';
+              
+              // Clear any existing timeout to avoid glitching if clicked multiple times
+              if (container.resetTimeout) clearTimeout(container.resetTimeout);
+              
+              container.resetTimeout = setTimeout(() => {
+                img.style.display = '';
+                name.style.display = '';
+              }, 2000);
+            }
+          }
+        });
+      });
     });
 
     // 4. SplitText for Headers
@@ -824,6 +847,195 @@ const folderData = {
     // Initial render
     setTimeout(renderPortfolio, 500);
 
+  </script>
+
+  <script>
+    // --- Figma 404 Interactive Text Logic ---
+    (async function initFigmaSVG() {
+      const outlineSpan = document.querySelector('.hero-title .outline');
+      if (!outlineSpan || (!outlineSpan.textContent.includes('SHAPING') && !outlineSpan.textContent.includes('Shaping'))) return;
+
+      try {
+        const res = await fetch('shaping_path.json');
+        const paths = await res.json();
+
+        outlineSpan.innerHTML = '';
+        outlineSpan.style.display = 'inline-block';
+        outlineSpan.style.position = 'relative';
+        outlineSpan.style.width = '100%'; 
+        outlineSpan.style.maxWidth = '982px';
+        outlineSpan.style.aspectRatio = '982 / 92';
+        outlineSpan.style.height = 'auto';
+        outlineSpan.style.webkitTextStroke = 'none';
+        outlineSpan.style.filter = 'none'; // Prevent parent from applying outline to circles!
+
+        const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        svg.setAttribute('viewBox', '0 0 982 92');
+        svg.style.width = '100%';
+        svg.style.height = '100%';
+        svg.style.overflow = 'visible';
+        svg.style.pointerEvents = 'none'; 
+        outlineSpan.appendChild(svg);
+
+        const pathElements = [];
+        paths.forEach(() => {
+          const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+          pathEl.setAttribute('fill', 'var(--text)');
+          pathEl.setAttribute('stroke', 'none'); 
+          pathEl.style.filter = 'url(#crisp-outline)'; // Keep the outline only on the text paths
+          // Add .char class so GSAP's .hero-title .char animation targets each letter staggeringly!
+          pathEl.classList.add('char');
+          svg.appendChild(pathEl);
+          pathElements.push(pathEl);
+        });
+
+        function updatePath() {
+          paths.forEach((commands, idx) => {
+            let d = '';
+            for (let i = 0; i < commands.length; i++) {
+              const cmd = commands[i];
+              if (cmd.type === 'M') d += `M ${cmd.x} ${cmd.y} `;
+              else if (cmd.type === 'L') d += `L ${cmd.x} ${cmd.y} `;
+              else if (cmd.type === 'C') d += `C ${cmd.x1} ${cmd.y1}, ${cmd.x2} ${cmd.y2}, ${cmd.x} ${cmd.y} `;
+              else if (cmd.type === 'Q') d += `Q ${cmd.x1} ${cmd.y1}, ${cmd.x} ${cmd.y} `;
+              else if (cmd.type === 'Z') d += 'Z ';
+            }
+            pathElements[idx].setAttribute('d', d);
+          });
+        }
+
+        const circleGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
+        circleGroup.style.pointerEvents = 'auto'; 
+        svg.appendChild(circleGroup);
+
+        // Group inner and outer edges of the stroke into single interactive nodes
+        let controlNodes = [];
+        const mergeRadius = 6;
+
+        paths.forEach(commands => {
+          commands.forEach((cmd) => {
+            if (cmd.x !== undefined && cmd.y !== undefined) {
+               if (cmd.type === 'M' || cmd.type === 'L' || cmd.type === 'C' || cmd.type === 'Q') {
+                 let foundNode = null;
+                 for (let node of controlNodes) {
+                   if (Math.hypot(cmd.x - node.x, cmd.y - node.y) <= mergeRadius) {
+                     foundNode = node;
+                     break;
+                   }
+                 }
+
+                 if (foundNode) {
+                   foundNode.commands.push(cmd);
+                 } else {
+                   controlNodes.push({
+                     x: cmd.x,
+                     y: cmd.y,
+                     commands: [cmd]
+                   });
+                 }
+               }
+            }
+          });
+        });
+
+        // Reduce anchor points drastically (e.g. 50% fewer on curves) by merging nodes within 32px
+        const reducedNodes = [];
+        let lastNode = null;
+        controlNodes.forEach(node => {
+           if (!lastNode || Math.hypot(node.x - lastNode.x, node.y - lastNode.y) > 32) {
+             reducedNodes.push(node);
+             lastNode = node;
+           } else {
+             lastNode.commands.push(...node.commands);
+           }
+        });
+
+        // Create a draggable circle for each reduced control node
+        reducedNodes.forEach((node) => {
+           const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+           circle.setAttribute('cx', node.x);
+           circle.setAttribute('cy', node.y);
+           circle.setAttribute('r', '4');
+           circle.setAttribute('fill', '#D4FF00'); 
+           circle.setAttribute('stroke', '#000');
+           circle.setAttribute('stroke-width', '1');
+           circle.style.cursor = 'grab';
+           
+           circle.addEventListener('mouseenter', () => circle.setAttribute('r', '8'));
+           circle.addEventListener('mouseleave', () => circle.setAttribute('r', '4'));
+
+           circleGroup.appendChild(circle);
+
+           let isDragging = false;
+           let startMouse = { x: 0, y: 0 };
+           let startCmdCoords = [];
+           
+           circle.addEventListener('mousedown', (e) => { 
+             isDragging = true; 
+             circle.style.cursor = 'grabbing'; 
+             const pt = svg.createSVGPoint();
+             pt.x = e.clientX;
+             pt.y = e.clientY;
+             const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+             startMouse = { x: svgP.x, y: svgP.y };
+             
+             startCmdCoords = node.commands.map(cmd => ({
+               x: cmd.x, y: cmd.y,
+               x1: cmd.x1, y1: cmd.y1,
+               x2: cmd.x2, y2: cmd.y2
+             }));
+             e.stopPropagation();
+           });
+           
+           window.addEventListener('mouseup', () => { 
+             isDragging = false; 
+             circle.style.cursor = 'grab'; 
+           });
+           
+           window.addEventListener('mousemove', (e) => {
+             if (isDragging) {
+               const pt = svg.createSVGPoint();
+               pt.x = e.clientX;
+               pt.y = e.clientY;
+               const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+               
+               const dx = svgP.x - startMouse.x;
+               const dy = svgP.y - startMouse.y;
+               
+               circle.setAttribute('cx', node.x + dx);
+               circle.setAttribute('cy', node.y + dy);
+
+               node.commands.forEach((cmd, idx) => {
+                 cmd.x = startCmdCoords[idx].x + dx;
+                 cmd.y = startCmdCoords[idx].y + dy;
+                 if (cmd.x1 !== undefined) cmd.x1 = startCmdCoords[idx].x1 + dx;
+                 if (cmd.y1 !== undefined) cmd.y1 = startCmdCoords[idx].y1 + dy;
+                 if (cmd.x2 !== undefined) cmd.x2 = startCmdCoords[idx].x2 + dx;
+                 if (cmd.y2 !== undefined) cmd.y2 = startCmdCoords[idx].y2 + dy;
+               });
+               updatePath();
+             }
+           });
+        });
+
+        updatePath();
+
+        // Elegantly pop in the interactive circles after the main text animation finishes
+        if (typeof gsap !== 'undefined') {
+          gsap.from(circleGroup.children, { 
+            scale: 0, 
+            opacity: 0, 
+            duration: 0.5, 
+            stagger: 0.02, 
+            ease: "back.out(2)", 
+            delay: 3.5,
+            transformOrigin: "center center"
+          });
+        }
+      } catch (err) {
+        console.error('Failed to init interactive text:', err);
+      }
+    })();
   </script>
 </body>
 </html>
