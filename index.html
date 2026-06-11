@@ -58,14 +58,18 @@
     @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
     /* Team Section */
-    .team-card { background: var(--surface); padding: 2rem; border-radius: 20px; display: flex; align-items: center; gap: 2rem; transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s, border-color 0.4s, box-shadow 0.4s; cursor: pointer; border: 1px solid transparent; }
-    .team-card:hover { transform: translateY(-10px) scale(1.02); background: var(--surface-hover); border-color: rgba(212, 255, 0, 0.2); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-    .team-card img { width: 90px; height: 90px; border-radius: 50%; object-fit: cover; filter: grayscale(100%); background-color: transparent; transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s, background-color 0.4s; }
-    .team-card:hover img { filter: grayscale(0%); background-color: var(--accent); transform: scale(1.1) rotate(3deg); }
-    .team-card h3 { font-family: var(--font-display); font-size: 1.5rem; margin-bottom: 0.2rem; color: var(--text); transition: color 0.4s; }
-    .team-card p { color: var(--accent); font-size: 0.9rem; transition: color 0.4s; }
-    .team-card:hover h3 { color: var(--accent); }
-    .team-card:hover p { color: var(--text); }
+    .team-card { background: var(--surface); padding: 2.5rem; border-radius: 20px; display: flex; align-items: center; gap: 2.5rem; cursor: pointer; border: 1px solid rgba(255,255,255,0.05); transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); position: relative; overflow: hidden; }
+    .team-card::before { content: ''; position: absolute; inset: 0; background: var(--accent); transform: scaleY(0); transform-origin: bottom; transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1); z-index: 0; }
+    .team-card:hover::before { transform: scaleY(1); }
+    .team-card > * { position: relative; z-index: 1; }
+    .team-card img { width: 100px; height: 100px; border-radius: 50%; object-fit: cover; filter: grayscale(100%) contrast(1.2); transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+    .team-card:hover img { filter: grayscale(0%) contrast(1); border-radius: 16px; transform: scale(1.1); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .team-card-info { display: flex; flex-direction: column; gap: 0.5rem; }
+    .team-card h3 { font-family: var(--font-display); font-size: 2rem; margin: 0; color: var(--text); transition: color 0.6s cubic-bezier(0.23, 1, 0.32, 1); letter-spacing: -0.02em; }
+    .team-card p { color: rgba(255,255,255,0.5); font-size: 1rem; transition: color 0.6s cubic-bezier(0.23, 1, 0.32, 1); margin: 0; }
+    .team-card:hover h3, .team-card:hover p { color: #000; }
+    .team-arrow { margin-left: auto; width: 50px; height: 50px; border: 1px solid rgba(255,255,255,0.2); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
+    .team-card:hover .team-arrow { background: #000; color: var(--accent); border-color: #000; transform: translateX(10px) rotate(-45deg); }
 
     /* Services Section */
     .services { padding-top: 10rem; padding-bottom: 10rem; }
@@ -219,17 +223,19 @@
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
         <div class="team-card fade-up">
           <img src="profiles/manishoraon.webp">
-          <div>
+          <div class="team-card-info">
             <h3>Manish Oraon</h3>
             <p>Designer & Developer</p>
           </div>
+          <div class="team-arrow"><i data-lucide="arrow-right"></i></div>
         </div>
         <div class="team-card fade-up">
           <img src="profiles/gulshanminj.webp">
-          <div>
+          <div class="team-card-info">
             <h3>Gulshan Minj</h3>
             <p>Client Relations & Print Manager</p>
           </div>
+          <div class="team-arrow"><i data-lucide="arrow-right"></i></div>
         </div>
       </div>
     </section>
