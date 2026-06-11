@@ -1547,17 +1547,24 @@ ScrollTrigger.create({ start:'top -60px', onToggle: self => document.querySelect
 
 const wordLocal = document.getElementById('word-local');
 if (wordLocal) {
-  const originalWord = "Local";
   const words = "Local,Rural,Small,Regional,Community,Homegrown".split(',');
   let wordIdx = 0;
   
   wordLocal.style.transition = 'color 0.3s ease';
+  wordLocal.style.display = 'inline-block';
+
+  const changeWord = () => {
+    wordIdx = (wordIdx + 1) % words.length;
+    gsap.to(wordLocal, {
+      y: -15, opacity: 0, duration: 0.25, ease: "power2.in", onComplete: () => {
+        wordLocal.innerText = words[wordIdx];
+        gsap.fromTo(wordLocal, { y: 15, opacity: 0 }, { y: 0, opacity: 1, duration: 0.25, ease: "power2.out" });
+      }
+    });
+  };
 
   // Slow loop by default
-  let wordInterval = setInterval(() => {
-    wordIdx = (wordIdx + 1) % words.length;
-    wordLocal.innerText = words[wordIdx];
-  }, 2000);
+  let wordInterval = setInterval(changeWord, 2500);
 
   // On hover, stop loop and highlight current word
   wordLocal.addEventListener('mouseenter', () => {
@@ -1571,10 +1578,7 @@ if (wordLocal) {
     wordIdx = words.indexOf(wordLocal.innerText);
     if (wordIdx === -1) wordIdx = 0;
     
-    wordInterval = setInterval(() => {
-      wordIdx = (wordIdx + 1) % words.length;
-      wordLocal.innerText = words[wordIdx];
-    }, 2000);
+    wordInterval = setInterval(changeWord, 2500);
   });
 }
 
