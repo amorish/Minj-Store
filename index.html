@@ -108,23 +108,28 @@
 
     /* Media Queries */
     @media (max-width: 768px) {
+      .container { padding: 0 6vw; }
       .work-grid { grid-template-columns: 1fr; margin-top: 3rem; }
       .work-item:nth-child(even) { margin-top: 0; }
       .service-item { grid-template-columns: 1fr; gap: 0.5rem; padding: 2rem 0; }
-      .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 3rem; }
+      .section-header { flex-direction: column; align-items: flex-start; gap: 1rem; margin-bottom: 2rem; }
       .section-desc { text-align: left; }
-      header { padding: 1.5rem 4vw; }
-      .hero-title { line-height: 1.1; }
-      .marquee-inner { font-size: 2rem; }
+      header { padding: 1.5rem 6vw; }
+      .hero-title { font-size: clamp(2rem, 12vw, 12rem); line-height: 1.1; margin-bottom: 1rem; }
+      .marquee-inner { font-size: 1.5rem; }
       .footer-bottom { flex-direction: column; gap: 1.5rem; align-items: center; }
-      .works { padding: 5rem 0; }
-      .services { padding: 5rem 0; }
-      .team { padding-top: 5rem !important; }
-      footer { padding: 8rem 4vw 2rem; }
-      .btn-magnetic { width: 100px; height: 100px; font-size: 0.8rem; }
+      .footer-title { font-size: 3.5rem; margin-bottom: 3rem; }
+      .works { padding: 4rem 0; }
+      .services { padding: 4rem 0; }
+      .team { padding-top: 4rem !important; }
+      .team-card { flex-direction: column; text-align: center; padding: 1.5rem !important; gap: 1rem !important; }
+      .team-card img { width: 70px !important; height: 70px !important; }
+      footer { padding: 6rem 6vw 2rem; }
+      .btn-magnetic { width: 80px; height: 80px; font-size: 0.75rem; }
       .trusted-bar .brand-name { display: none; }
       .trusted-bar { padding: 2rem 0 !important; }
-      .trusted-logos { gap: 2rem !important; }
+      .trusted-logos { gap: 1.5rem !important; }
+      .trusted-logos img { height: 20px !important; }
     }
     @media (pointer: coarse) {
       .cursor-dot, .cursor-outline { display: none !important; }
