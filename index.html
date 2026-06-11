@@ -633,7 +633,8 @@ const folderData = {
     lenis.stop(); // Lock scroll during intro
 
     // 3. Preloader & Initial Animations
-    window.addEventListener('load', () => {
+    window.addEventListener('load', async () => {
+      if (window.figmaSVGPromise) await window.figmaSVGPromise;
       window.scrollTo(0, 0);
       setTimeout(() => window.scrollTo(0, 0), 10);
       const tl = gsap.timeline({
@@ -851,7 +852,7 @@ const folderData = {
 
   <script>
     // --- Figma 404 Interactive Text Logic ---
-    (async function initFigmaSVG() {
+    window.figmaSVGPromise = (async function initFigmaSVG() {
       const outlineSpan = document.querySelector('.hero-title .outline');
       if (!outlineSpan || (!outlineSpan.textContent.includes('SHAPING') && !outlineSpan.textContent.includes('Shaping'))) return;
 
