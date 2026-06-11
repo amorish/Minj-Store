@@ -651,80 +651,118 @@ const folderData = {
         .from('.hero-subtitle', { y: 30, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.8");
     });
 
-    // Mobile Brand Logo click interaction (Awwwards Style 3D Flip)
+    // Mobile Brand Logo click interaction (Smooth Width Morph)
     document.addEventListener('DOMContentLoaded', () => {
       const brandContainers = document.querySelectorAll('.trusted-logos > div');
-      let activeBrand = null; // Track the currently open brand
+      let activeBrand = null; 
 
       brandContainers.forEach(container => {
         container.style.cursor = 'pointer';
-        // Add perspective for a true 3D flip effect
-        container.style.perspective = '1000px';
         
         container.addEventListener('click', () => {
           if (window.innerWidth <= 768 && !container.isAnimating) {
             
             // If another brand is open, close it immediately
             if (activeBrand && activeBrand !== container) {
-              const oldContainer = activeBrand;
-              const oldImg = oldContainer.querySelector('img');
-              const oldName = oldContainer.querySelector('.brand-name');
+              const oldC = activeBrand;
+              const oldImg = oldC.querySelector('img');
+              const oldName = oldC.querySelector('.brand-name');
               
-              if (oldContainer.resetTimeout) clearTimeout(oldContainer.resetTimeout);
-              oldContainer.isAnimating = true;
+              if (oldC.resetTimeout) clearTimeout(oldC.resetTimeout);
+              oldC.isAnimating = true;
               
-              const tlClose = gsap.timeline();
-              tlClose.to(oldName, { opacity: 0, rotationX: 90, duration: 0.3, ease: "power2.in" })
-                .call(() => {
+              const oldImgTargetWidth = oldImg.dataset.origWidth || oldImg.offsetWidth;
+              
+              oldImg.style.display = '';
+              oldImg.style.width = '0px';
+              oldImg.style.opacity = '0';
+              oldC.style.gap = '0px';
+              
+              const tlClose = gsap.timeline({
+                onComplete: () => {
                    oldName.style.display = 'none';
-                   oldImg.style.display = '';
-                   gsap.set(oldImg, { opacity: 0, rotationX: -90 });
-                })
-                .to(oldImg, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
-                .call(() => {
-                   oldContainer.isAnimating = false;
-                   if (activeBrand === oldContainer) activeBrand = null;
-                });
+                   oldName.style.width = '';
+                   oldName.style.opacity = '';
+                   oldImg.style.width = '';
+                   oldImg.style.opacity = '';
+                   oldImg.style.objectFit = '';
+                   oldImg.style.objectPosition = '';
+                   oldC.style.gap = '';
+                   oldC.isAnimating = false;
+                   if (activeBrand === oldC) activeBrand = null;
+                }
+              });
+              
+              tlClose.to(oldName, { width: 0, opacity: 0, duration: 0.4, ease: "power3.inOut" })
+                     .to(oldImg, { width: oldImgTargetWidth, opacity: 1, duration: 0.4, ease: "power3.inOut" }, "<");
             }
 
             const img = container.querySelector('img');
             const name = container.querySelector('.brand-name');
             if (img && name && img.style.display !== 'none') {
               container.isAnimating = true;
-              activeBrand = container; // Mark as currently open
+              activeBrand = container; 
+              
+              // Prevent squishing during width transition
+              img.style.objectFit = 'cover';
+              img.style.objectPosition = 'left center';
+              
+              // Save orig width for the closing animation
+              img.dataset.origWidth = img.offsetWidth;
+              const imgWidth = img.offsetWidth;
+              
+              // Prepare name
+              name.style.display = 'inline-block';
+              name.style.whiteSpace = 'nowrap';
+              name.style.overflow = 'hidden';
+              const nameWidth = name.offsetWidth;
+              
+              name.style.width = '0px';
+              name.style.opacity = '0';
+              
+              img.style.overflow = 'hidden';
+              
+              container.style.gap = '0px'; // Prevent instant jump
               
               const tl = gsap.timeline();
               
-              // Snappy 3D fold out image
-              tl.to(img, { opacity: 0, rotationX: 90, duration: 0.3, ease: "power2.in" })
+              tl.to(img, { width: 0, opacity: 0, padding: 0, margin: 0, duration: 0.4, ease: "power3.inOut" })
+                .to(name, { width: nameWidth, opacity: 1, duration: 0.4, ease: "power3.inOut" }, "<")
                 .call(() => {
                    img.style.display = 'none';
-                   name.style.display = 'inline-block';
-                   // Reliably set starting state for text
-                   gsap.set(name, { opacity: 0, rotationX: -90, transformOrigin: "center center" });
-                })
-                // Snappy 3D fold in text
-                .to(name, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
-                .call(() => {
+                   img.style.width = '';
+                   img.style.opacity = '';
+                   name.style.width = '';
+                   container.style.gap = '';
                    container.isAnimating = false;
                    
                    if (container.resetTimeout) clearTimeout(container.resetTimeout);
                    container.resetTimeout = setTimeout(() => {
-                     // Only auto-close if it hasn't been closed already
                      if (activeBrand === container && !container.isAnimating) {
                        container.isAnimating = true;
-                       const tl2 = gsap.timeline();
-                       tl2.to(name, { opacity: 0, rotationX: 90, duration: 0.3, ease: "power2.in" })
-                          .call(() => {
-                             name.style.display = 'none';
-                             img.style.display = '';
-                             gsap.set(img, { opacity: 0, rotationX: -90 });
-                          })
-                          .to(img, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
-                          .call(() => {
-                             container.isAnimating = false;
-                             if (activeBrand === container) activeBrand = null;
-                          });
+                       
+                       img.style.display = '';
+                       img.style.width = '0px';
+                       img.style.opacity = '0';
+                       container.style.gap = '0px';
+                       
+                       const tl2 = gsap.timeline({
+                         onComplete: () => {
+                           name.style.display = 'none';
+                           name.style.width = '';
+                           name.style.opacity = '';
+                           img.style.width = '';
+                           img.style.opacity = '';
+                           img.style.objectFit = '';
+                           img.style.objectPosition = '';
+                           container.style.gap = '';
+                           container.isAnimating = false;
+                           if (activeBrand === container) activeBrand = null;
+                         }
+                       });
+                       
+                       tl2.to(name, { width: 0, opacity: 0, duration: 0.4, ease: "power3.inOut" })
+                          .to(img, { width: imgWidth, opacity: 1, duration: 0.4, ease: "power3.inOut" }, "<");
                      }
                    }, 2500);
                 });
