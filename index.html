@@ -651,7 +651,7 @@ const folderData = {
         .from('.hero-subtitle', { y: 30, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.8");
         
       // Mobile Brand Logo click interaction
-      const brandContainers = document.querySelectorAll('.trusted-bar > div:nth-child(2) > div');
+      const brandContainers = document.querySelectorAll('.trusted-logos > div');
       brandContainers.forEach(container => {
         container.addEventListener('click', () => {
           if (window.innerWidth <= 768) {
