@@ -751,6 +751,31 @@ const folderData = {
       gsap.from(elem, { scrollTrigger: { trigger: elem, start: 'top 85%' }, y: 40, opacity: 0, duration: 1, ease: "power3.out" });
     });
 
+    // --- TRUSTED BAR SCROLL ANIMATION ---
+    const trustedBar = document.querySelector('.trusted-bar');
+    if (trustedBar) {
+      const trustedTitle = trustedBar.querySelector('p');
+      const trustedLogos = trustedBar.querySelectorAll('.trusted-logos > div');
+      
+      const tlTrusted = gsap.timeline({
+        scrollTrigger: {
+          trigger: trustedBar,
+          start: 'top 85%',
+          end: 'bottom 15%',
+          toggleActions: "play reverse play reverse"
+        }
+      });
+      
+      tlTrusted.fromTo(trustedTitle, 
+        { y: 30, opacity: 0, filter: 'blur(5px)' }, 
+        { y: 0, opacity: 1, filter: 'blur(0px)', duration: 0.8, ease: "power3.out" }
+      )
+      .fromTo(trustedLogos, 
+        { y: 50, opacity: 0, rotationX: -45, scale: 0.9 }, 
+        { y: 0, opacity: 1, rotationX: 0, scale: 1, stagger: 0.1, duration: 0.8, ease: "back.out(1.2)" }, 
+        "-=0.6"
+      );
+    }
 
     // --- PORTFOLIO LOGIC ---
     let isPortfolioExpanded = false;
