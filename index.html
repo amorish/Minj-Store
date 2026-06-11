@@ -261,7 +261,7 @@
   </main>
 
   <!-- MASONRY MODAL -->
-  <div class="masonry-modal" id="folder-modal">
+  <div class="masonry-modal" id="folder-modal" data-lenis-prevent="true">
     <div class="masonry-modal-close" onclick="closeModal()">
       <i data-lucide="x"></i>
     </div>
@@ -581,7 +581,7 @@ const folderData = {
       const grid = document.getElementById('port-grid');
       grid.innerHTML = '';
       
-      const predefinedOrder = ['Mahakumbh', 'Vasundhara', 'St George', 'Shivaji Sangha', 'Pragati'];
+      const predefinedOrder = ['Vasundhara', 'St George', 'Shivaji Sangha', 'Pragati'];
       const sortedFolders = Object.keys(dataObj)
         .map(key => ({ title: key, ...dataObj[key] }))
         .sort((a, b) => {
@@ -657,7 +657,7 @@ const folderData = {
         });
       }
       modal.classList.add('active');
-      lenis.stop(); // Stop smooth scrolling while modal is open
+      document.body.style.overflow = 'hidden'; // Lock background scroll
 
       // Modal opening GSAP animations
       gsap.fromTo(title, {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "power3.out", delay: 0.1});
@@ -673,7 +673,7 @@ const folderData = {
       
       setTimeout(() => {
         modal.classList.remove('active');
-        lenis.start(); // Resume scrolling
+        document.body.style.overflow = ''; // Resume background scroll
       }, 400);
     }
 
