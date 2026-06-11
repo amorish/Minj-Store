@@ -209,8 +209,8 @@ nav.scrolled{
   position: relative;
 }
 @media(max-width:960px){
-  .hero-wrap { padding: 1.5rem .5rem .5rem; }
-  .hero-container { border-radius: 24px; overflow: hidden; }
+  .hero-wrap { padding: 0; }
+  .hero-container { border-radius: 0; overflow: hidden; margin: 0; }
   .hero {
     grid-template-columns: 1fr;
     grid-template-rows: auto auto auto;
@@ -304,7 +304,7 @@ nav.scrolled{
     justify-content: flex-end;
     margin-bottom: 2.5rem;
     margin-right: -1.5rem;
-    margin-left: 1.5rem;
+    margin-left: 3.5rem;
   }
 }
 .hero-center-img-wrap {
@@ -366,9 +366,14 @@ nav.scrolled{
   .hero-tagline {
     text-align: left;
     max-width: 100%;
-    border-radius: 24px 0 0 24px !important;
+    border-radius: 20px 0 0 20px !important;
     border-right: none !important;
   }
+}
+@media(max-width: 768px) {
+  .hero-tagline.hero-glass { padding: 1.25rem; }
+  .hero-tagline-quote { font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .hero-tagline-sub { font-size: 0.85rem; line-height: 1.5; }
 }
 
 /* ─── TRUSTED BAR ───────────────────────────────────────── */
