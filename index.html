@@ -93,9 +93,10 @@
     .footer-links a:hover { color: var(--accent); }
 
     /* Masonry Modal */
-    .masonry-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg); z-index: 9999; display: none; opacity: 0; flex-direction: column; align-items: center; justify-content: flex-start; overflow-y: auto; overflow-x: hidden; padding: 2rem 1rem; transition: opacity 0.3s ease; }
-    .masonry-modal.active { display: flex; opacity: 1; }
-    .masonry-modal-close { position: absolute; top: 1.5rem; right: 1.5rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10000; transition: all 0.3s; }
+    .masonry-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: var(--bg); z-index: 9999; display: none; opacity: 0; overflow-y: auto; overflow-x: hidden; transition: opacity 0.3s ease; }
+    .masonry-modal.active { display: block; opacity: 1; }
+    .masonry-modal-inner { width: 100%; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding: 2rem 1rem; min-height: 100%; }
+    .masonry-modal-close { position: fixed; top: 1.5rem; right: 1.5rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10000; transition: all 0.3s; cursor: pointer; }
     .masonry-modal-close:hover { background: var(--accent); color: #000; transform: scale(1.1); }
     .masonry-modal-title { font-family: var(--font-display); font-weight: 800; font-size: 3rem; color: #fff; margin-bottom: 2rem; text-align: center; margin-top: 1rem; text-transform: uppercase; }
     .masonry-grid { column-count: 3; column-gap: 1rem; width: 100%; max-width: 1200px; }
@@ -286,12 +287,14 @@
   </main>
 
   <!-- MASONRY MODAL -->
-  <div class="masonry-modal" id="folder-modal" data-lenis-prevent="true">
+  <div class="masonry-modal" id="folder-modal">
     <div class="masonry-modal-close" onclick="closeModal()">
       <i data-lucide="x"></i>
     </div>
-    <div class="masonry-modal-title" id="folder-modal-title">Folder Name</div>
-    <div class="masonry-grid" id="folder-modal-grid"></div>
+    <div class="masonry-modal-inner" id="folder-modal-inner">
+      <div class="masonry-modal-title" id="folder-modal-title">Folder Name</div>
+      <div class="masonry-grid" id="folder-modal-grid"></div>
+    </div>
   </div>
 
   <!-- External Libraries -->
@@ -550,6 +553,11 @@ const folderData = {
     }
 
     // 2. Smooth Scrolling Setup (Lenis)
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -658,6 +666,8 @@ const folderData = {
       if (btn) btn.innerHTML = isPortfolioExpanded ? 'See Less' : 'See More';
     }
 
+    let modalLenis;
+
     function openFolder(folderKey) {
       const modal = document.getElementById('folder-modal');
       const title = document.getElementById('folder-modal-title');
@@ -689,6 +699,24 @@ const folderData = {
       modal.classList.add('active');
       document.body.style.overflow = 'hidden'; // Lock background scroll
 
+      // Lenis smooth scroll for modal
+      lenis.stop(); // stop main scrolling
+      modal.scrollTop = 0; // reset modal scroll position
+      modalLenis = new Lenis({
+        wrapper: modal,
+        content: document.getElementById('folder-modal-inner'),
+        lerp: 0.1,
+        smooth: true,
+        direction: 'vertical'
+      });
+      function rafModal(time) {
+        if (modalLenis) {
+          modalLenis.raf(time);
+          requestAnimationFrame(rafModal);
+        }
+      }
+      requestAnimationFrame(rafModal);
+
       // Modal opening GSAP animations
       gsap.fromTo(title, {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "power3.out", delay: 0.1});
       gsap.fromTo('.masonry-item', {y: 50, scale: 0.95, opacity: 0}, {y: 0, scale: 1, opacity: 1, duration: 0.6, stagger: 0.05, ease: "power3.out", delay: 0.2});
@@ -704,6 +732,11 @@ const folderData = {
       setTimeout(() => {
         modal.classList.remove('active');
         document.body.style.overflow = ''; // Resume background scroll
+        if (modalLenis) {
+          modalLenis.destroy();
+          modalLenis = null;
+        }
+        lenis.start(); // resume main scrolling
       }, 400);
     }
 
