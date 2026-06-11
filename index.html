@@ -649,11 +649,16 @@ const folderData = {
         .to('.preloader', { height: 0, duration: 1, ease: "power4.inOut" }, "-=0.2")
         .from('.hero-title .char', { y: 100, opacity: 0, stagger: 0.05, duration: 1.2, ease: "power4.out" }, "-=0.5")
         .from('.hero-subtitle', { y: 30, opacity: 0, duration: 1, ease: "power3.out" }, "-=0.8");
-        
-      // Mobile Brand Logo click interaction (Awwwards Style 3D Flip)
+    });
+
+    // Mobile Brand Logo click interaction (Awwwards Style 3D Flip)
+    document.addEventListener('DOMContentLoaded', () => {
       const brandContainers = document.querySelectorAll('.trusted-logos > div');
       brandContainers.forEach(container => {
         container.style.cursor = 'pointer';
+        // Add perspective for a true 3D flip effect
+        container.style.perspective = '1000px';
+        
         container.addEventListener('click', () => {
           if (window.innerWidth <= 768 && !container.isAnimating) {
             const img = container.querySelector('img');
@@ -668,12 +673,11 @@ const folderData = {
                 .call(() => {
                    img.style.display = 'none';
                    name.style.display = 'inline-block';
+                   // Reliably set starting state for text
+                   gsap.set(name, { opacity: 0, rotationX: -90, transformOrigin: "center center" });
                 })
                 // Snappy 3D fold in text
-                .fromTo(name, 
-                  { opacity: 0, rotationX: -90, transformOrigin: "center center" }, 
-                  { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" }
-                )
+                .to(name, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
                 .call(() => {
                    container.isAnimating = false;
                    
@@ -685,6 +689,7 @@ const folderData = {
                         .call(() => {
                            name.style.display = 'none';
                            img.style.display = '';
+                           gsap.set(img, { opacity: 0, rotationX: -90 });
                         })
                         .to(img, { opacity: 1, rotationX: 0, duration: 0.4, ease: "back.out(1.2)" })
                         .call(() => container.isAnimating = false);
