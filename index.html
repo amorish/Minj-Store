@@ -24,6 +24,13 @@
     body { background-color: var(--bg); color: var(--text); font-family: var(--font-body); overflow: hidden; -webkit-font-smoothing: antialiased; }
     ::selection { background: var(--accent); color: #000; }
 
+    /* Custom Scrollbar */
+    html { scrollbar-width: thin; scrollbar-color: #333 var(--bg); }
+    ::-webkit-scrollbar { width: 8px; height: 8px; }
+    ::-webkit-scrollbar-track { background: var(--bg); }
+    ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
     /* Custom Cursor */
     .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 999999; pointer-events: none; }
     .cursor-dot { width: 8px; height: 8px; background-color: var(--accent); }
