@@ -111,6 +111,9 @@
     .masonry-modal-close { position: fixed; top: 1.5rem; right: 1.5rem; background: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.2); color: #fff; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10000; transition: all 0.3s; cursor: pointer; }
     .masonry-modal-close:hover { background: var(--accent); color: #000; transform: scale(1.1); }
     .masonry-modal-title { font-family: var(--font-display); font-weight: 800; font-size: clamp(2rem, 8vw, 3rem); line-height: 1.1; word-wrap: break-word; overflow-wrap: break-word; color: #fff; margin-bottom: 2rem; text-align: center; margin-top: 1rem; text-transform: uppercase; padding: 0 1rem; }
+    .masonry-modal-link { display: inline-flex; align-items: center; gap: 0.5rem; background: var(--accent); color: #000; padding: 0.8rem 1.5rem; border-radius: 30px; font-family: var(--font-body); font-weight: 600; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 3rem; transition: transform 0.3s, background 0.3s; }
+    .masonry-modal-link:hover { transform: translateY(-3px); background: #fff; }
+    .masonry-modal-link i { width: 18px; height: 18px; }
     .masonry-grid { column-count: 3; column-gap: 1rem; width: 100%; max-width: 1200px; }
     .masonry-item { break-inside: avoid; margin-bottom: 1rem; border-radius: 12px; overflow: hidden; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); }
     .masonry-item img { width: 100%; height: auto; display: block; object-fit: cover; }
@@ -305,6 +308,9 @@
     </div>
     <div class="masonry-modal-inner" id="folder-modal-inner">
       <div class="masonry-modal-title" id="folder-modal-title">Folder Name</div>
+      <a id="folder-modal-link" class="masonry-modal-link" target="_blank" href="#" style="display: none;">
+        Visit Live Site <i data-lucide="external-link"></i>
+      </a>
       <div class="masonry-grid" id="folder-modal-grid"></div>
     </div>
   </div>
@@ -699,6 +705,14 @@ const folderData = {
       title.innerText = folderKey;
       grid.innerHTML = '';
       const data = dataObj[folderKey];
+
+      const linkBtn = document.getElementById('folder-modal-link');
+      if (data && data.link) {
+        linkBtn.href = data.link;
+        linkBtn.style.display = 'inline-flex';
+      } else {
+        linkBtn.style.display = 'none';
+      }
       
       if (data && data.groups) {
         data.groups.forEach(group => {
@@ -743,6 +757,7 @@ const folderData = {
 
       // Modal opening GSAP animations
       gsap.fromTo(title, {y: 30, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "power3.out", delay: 0.1});
+      gsap.fromTo(linkBtn, {y: 20, opacity: 0}, {y: 0, opacity: 1, duration: 0.6, ease: "power3.out", delay: 0.15});
       gsap.fromTo('.masonry-item', {y: 50, scale: 0.95, opacity: 0}, {y: 0, scale: 1, opacity: 1, duration: 0.6, stagger: 0.05, ease: "power3.out", delay: 0.2});
     }
 
@@ -752,6 +767,7 @@ const folderData = {
       // Modal closing GSAP animations
       gsap.to('.masonry-item', {y: 20, opacity: 0, duration: 0.3, stagger: 0.02, ease: "power2.in"});
       gsap.to('#folder-modal-title', {y: -20, opacity: 0, duration: 0.3, ease: "power2.in"});
+      gsap.to('#folder-modal-link', {y: -20, opacity: 0, duration: 0.3, ease: "power2.in"});
       
       setTimeout(() => {
         modal.classList.remove('active');
