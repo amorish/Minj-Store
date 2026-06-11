@@ -27,8 +27,8 @@
     /* Custom Scrollbar */
     ::-webkit-scrollbar { display: none; }
     html { scrollbar-width: none; -ms-overflow-style: none; }
-    .custom-scrollbar { position: fixed; top: 0; right: 0; width: 12px; height: 100vh; z-index: 99999; display: flex; justify-content: flex-end; align-items: flex-start; pointer-events: none; }
-    .custom-scrollbar-thumb { width: 4px; height: 0px; background: var(--accent); border-radius: 4px; margin-right: 2px; }
+    .custom-scrollbar { position: fixed; top: 0; right: 0; width: 20px; height: 100vh; z-index: 99999; display: flex; justify-content: flex-end; align-items: flex-start; pointer-events: none; overflow: hidden; }
+    .custom-scrollbar-thumb { width: 10px; height: 0px; background: var(--accent); border-radius: 10px 0 0 10px; transform: translateX(20px); }
 
     /* Custom Cursor */
     .cursor-dot, .cursor-outline { position: fixed; top: 0; left: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 999999; pointer-events: none; }
@@ -607,16 +607,24 @@ const folderData = {
 
     // Custom Scrollbar Logic
     const scrollThumb = document.querySelector('.custom-scrollbar-thumb');
+    let scrollTimeout;
     function updateScrollbar() {
       const scrollHeight = document.documentElement.scrollHeight;
       const clientHeight = document.documentElement.clientHeight;
       const scrollTop = window.scrollY || document.documentElement.scrollTop;
       const ratio = clientHeight / scrollHeight;
-      const thumbHeight = Math.max(ratio * clientHeight, 40);
+      const thumbHeight = Math.max(ratio * clientHeight, 100);
       const maxScroll = scrollHeight - clientHeight;
       const scrollProgress = maxScroll > 0 ? scrollTop / maxScroll : 0;
       const maxThumbY = clientHeight - thumbHeight;
+      
       gsap.set(scrollThumb, { height: thumbHeight, y: scrollProgress * maxThumbY });
+      gsap.to(scrollThumb, { x: 0, duration: 0.2, overwrite: "auto" });
+
+      clearTimeout(scrollTimeout);
+      scrollTimeout = setTimeout(() => {
+        gsap.to(scrollThumb, { x: 20, duration: 0.4, ease: "power2.inOut", overwrite: "auto" });
+      }, 800);
     }
     lenis.on('scroll', updateScrollbar);
     window.addEventListener('resize', updateScrollbar);
