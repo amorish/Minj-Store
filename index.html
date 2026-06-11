@@ -728,6 +728,7 @@ const folderData = {
         content: document.getElementById('folder-modal-inner'),
         lerp: 0.1,
         smooth: true,
+        smoothTouch: false,
         direction: 'vertical'
       });
       function rafModal(time) {
@@ -752,7 +753,8 @@ const folderData = {
       
       setTimeout(() => {
         modal.classList.remove('active');
-        document.body.style.overflow = ''; // Resume background scroll
+        document.body.style.overflow = 'auto'; // Resume background scroll
+        document.body.style.overflowX = 'hidden';
         if (modalLenis) {
           modalLenis.destroy();
           modalLenis = null;
