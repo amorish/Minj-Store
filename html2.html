@@ -1195,10 +1195,7 @@ const folderData = {
              e.stopPropagation();
            });
            
-           window.addEventListener('mouseup', () => { 
-             isDragging = false; 
-             circle.style.cursor = 'grab'; 
-           });
+           window.addEventListener('mouseup', () => { if (isDragging) { isDragging = false; circle.style.cursor = 'grab'; node.x = parseFloat(circle.getAttribute('cx')); node.y = parseFloat(circle.getAttribute('cy')); } });
            
            window.addEventListener('mousemove', (e) => {
              if (isDragging) {
