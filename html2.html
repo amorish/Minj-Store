@@ -1163,13 +1163,13 @@ const folderData = {
            const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
            circle.setAttribute('cx', node.x);
            circle.setAttribute('cy', node.y);
-           circle.setAttribute('r', '4');
+           circle.setAttribute('r', '2');
            circle.setAttribute('fill', '#D4FF00'); 
            circle.setAttribute('stroke', '#000');
            circle.setAttribute('stroke-width', '1');
            circle.style.cursor = 'grab';
            
-           circle.addEventListener('mouseenter', () => circle.setAttribute('r', '8'));
+           circle.addEventListener('mouseenter', () => circle.setAttribute('r', '4'));
            circle.addEventListener('mouseleave', () => circle.setAttribute('r', '4'));
 
            circleGroup.appendChild(circle);
