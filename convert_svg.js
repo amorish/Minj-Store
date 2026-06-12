@@ -1,7 +1,7 @@
 const fs = require('fs');
 const parseSVG = require('svg-path-parser');
 
-const svgStr = fs.readFileSync('SHAPING (Stroke).svg', 'utf8');
+const svgStr = fs.readFileSync('shaping_stroke.svg', 'utf8');
 const regex = /d="([^"]+)"/g;
 let match;
 const allPaths = [];
