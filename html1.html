@@ -183,29 +183,6 @@
   .nav-btn:hover {
     transform: translateY(-2px);
   }
-
-  .anchor-point {
-    opacity: 0;
-    cursor: grab;
-    transform-origin: center;
-    transition: opacity 0.3s, transform 0.3s;
-  }
-  @media (hover: hover) {
-    .anchor-point:hover {
-      opacity: 1;
-      transform: scale(1.5);
-    }
-  }
-  @media (hover: none) {
-    .anchor-point {
-      opacity: 1 !important;
-    }
-  }
-  .anchor-point.dragging {
-    opacity: 1 !important;
-    transform: scale(1.5);
-    cursor: grabbing;
-  }
 </style>
 </head>
 <body>
@@ -1122,29 +1099,29 @@ const folderData = {
         const mergeRadius = 6;
 
         paths.forEach(commands => {
-          for (let i = 0; i < commands.length; i++) {
-            const cmd = commands[i];
+          commands.forEach((cmd) => {
             if (cmd.x !== undefined && cmd.y !== undefined) {
-              if (cmd.type === 'M' || cmd.type === 'L' || cmd.type === 'C' || cmd.type === 'Q') {
-                let foundNode = null;
-                for (let node of controlNodes) {
-                  if (Math.hypot(cmd.x - node.x, cmd.y - node.y) <= mergeRadius) {
-                    foundNode = node;
-                    break;
-                  }
-                }
-                if (foundNode) {
-                  foundNode.commands.push(cmd);
-                } else {
-                  controlNodes.push({
-                    x: cmd.x,
-                    y: cmd.y,
-                    commands: [cmd]
-                  });
-                }
-              }
+               if (cmd.type === 'M' || cmd.type === 'L' || cmd.type === 'C' || cmd.type === 'Q') {
+                 let foundNode = null;
+                 for (let node of controlNodes) {
+                   if (Math.hypot(cmd.x - node.x, cmd.y - node.y) <= mergeRadius) {
+                     foundNode = node;
+                     break;
+                   }
+                 }
+
+                 if (foundNode) {
+                   foundNode.commands.push(cmd);
+                 } else {
+                   controlNodes.push({
+                     x: cmd.x,
+                     y: cmd.y,
+                     commands: [cmd]
+                   });
+                 }
+               }
             }
-          }
+          });
         });
 
         const reducedNodes = [];
@@ -1169,81 +1146,4 @@ const folderData = {
            circle.setAttribute('stroke-width', '1');
            circle.style.cursor = 'grab';
            
-           circle.addEventListener('mouseenter', () => circle.setAttribute('r', '8'));
-           circle.addEventListener('mouseleave', () => circle.setAttribute('r', '4'));
-
-           circleGroup.appendChild(circle);
-
-           let isDragging = false;
-           let startMouse = { x: 0, y: 0 };
-           let startCmdCoords = [];
            
-           circle.addEventListener('mousedown', (e) => { 
-             isDragging = true; 
-             circle.style.cursor = 'grabbing'; 
-             const pt = svg.createSVGPoint();
-             pt.x = e.clientX;
-             pt.y = e.clientY;
-             const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
-             startMouse = { x: svgP.x, y: svgP.y };
-             
-             startCmdCoords = node.commands.map(cmd => ({
-               x: cmd.x, y: cmd.y,
-               x1: cmd.x1, y1: cmd.y1,
-               x2: cmd.x2, y2: cmd.y2
-             }));
-             e.stopPropagation();
-           });
-           
-           window.addEventListener('mouseup', () => { 
-             isDragging = false; 
-             circle.style.cursor = 'grab'; 
-           });
-           
-           window.addEventListener('mousemove', (e) => {
-             if (isDragging) {
-               const pt = svg.createSVGPoint();
-               pt.x = e.clientX;
-               pt.y = e.clientY;
-               const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
-               
-               const dx = svgP.x - startMouse.x;
-               const dy = svgP.y - startMouse.y;
-               
-               circle.setAttribute('cx', node.x + dx);
-               circle.setAttribute('cy', node.y + dy);
-
-               node.commands.forEach((cmd, idx) => {
-                 cmd.x = startCmdCoords[idx].x + dx;
-                 cmd.y = startCmdCoords[idx].y + dy;
-                 if (cmd.x1 !== undefined) cmd.x1 = startCmdCoords[idx].x1 + dx;
-                 if (cmd.y1 !== undefined) cmd.y1 = startCmdCoords[idx].y1 + dy;
-                 if (cmd.x2 !== undefined) cmd.x2 = startCmdCoords[idx].x2 + dx;
-                 if (cmd.y2 !== undefined) cmd.y2 = startCmdCoords[idx].y2 + dy;
-               });
-               updatePath();
-             }
-           });
-        });
-
-        updatePath();
-
-        // Elegantly pop in the interactive circles after the main text animation finishes
-        if (typeof gsap !== 'undefined') {
-          gsap.from(circleGroup.children, { 
-            scale: 0, 
-            opacity: 0, 
-            duration: 0.5, 
-            stagger: 0.02, 
-            ease: "back.out(2)", 
-            delay: 3.5,
-            transformOrigin: "center center"
-          });
-        }
-      } catch (err) {
-        console.error('Failed to init interactive text:', err);
-      }
-    })();
-  </script>
-</body>
-</html>
